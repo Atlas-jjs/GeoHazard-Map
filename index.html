@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CAR GeoPortal - Cordillera Geohazard & Land Use Map</title>
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <!-- ? Page Loading Overlay -->
+    <div id="page-loader" class="page-loader">
+      <div class="loader-content">
+        <!-- Swap this img for any SVG or image you want -->
+        <!-- <img src="your-logo.svg" alt="Loading" class="loader-logo" /> -->
+        <div class="loader-spinner"></div>
+        <p class="loader-text">Loading map layers...</p>
+      </div>
+    </div>
+
+    <!-- ? Full-screen Map Container -->
+    <div id="map"></div>
+
+    <!-- ? Floating Controls Panel Container (Bottom Right) -->
+    <div id="controls-container">
+      <!-- Floating Expandable Control Panel -->
+      <div id="controls-panel" class="floating-card glass hidden">
+        <!-- Tabs Headers -->
+        <div class="panel-tabs">
+          <button class="tab-btn active" data-tab="layers">
+            <i data-lucide="layers"></i> Layers
+          </button>
+          <button class="tab-btn" data-tab="import">
+            <i data-lucide="upload-cloud"></i> Import
+          </button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="panel-content">
+          <!-- Layers Tab -->
+          <div class="tab-pane active" id="tab-layers">
+            <div class="layer-list">
+              <div class="source-toggle">
+                <span class="source-toggle-label">Source</span>
+                <div class="source-toggle-btns">
+                  <button class="source-btn active" id="btn-src-namria">
+                    NAMRIA
+                  </button>
+                  <button class="source-btn" id="btn-src-cad">CAD</button>
+                </div>
+              </div>
+
+              <!-- ? NAMRIA -->
+              <label class="control-checkbox" id="wrap-namria-boundary">
+                <input type="checkbox" id="layer-namria-boundary" checked />
+                <span class="checkbox-custom boundary-color"></span>
+                <span class="layer-label">NAMRIA Boundary</span>
+              </label>
+              <label class="control-checkbox" id="wrap-namria-province">
+                <input type="checkbox" id="layer-province" />
+                <span class="checkbox-custom province-color"></span>
+                <span class="layer-label">NAMRIA Provinces</span>
+              </label>
+              <label class="control-checkbox" id="wrap-namria-municipality">
+                <input type="checkbox" id="layer-municipality" />
+                <span class="checkbox-custom municipality-color"></span>
+                <span class="layer-label">NAMRIA Municipalities</span>
+              </label>
+
+              <!-- ? CAD (hidden by default) -->
+              <label class="control-checkbox hidden" id="wrap-cad-boundary">
+                <input type="checkbox" id="layer-cad-boundary" />
+                <span class="checkbox-custom boundary-color"></span>
+                <span class="layer-label">CAD Boundary</span>
+              </label>
+              <label class="control-checkbox hidden" id="wrap-cad-province">
+                <input type="checkbox" id="layer-cad-province" />
+                <span class="checkbox-custom province-color"></span>
+                <span class="layer-label">CAD Provinces</span>
+              </label>
+              <label class="control-checkbox hidden" id="wrap-cad-municipality">
+                <input type="checkbox" id="layer-cad-municipality" />
+                <span class="checkbox-custom municipality-color"></span>
+                <span class="layer-label">CAD Municipalities</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Import Tab -->
+          <div class="tab-pane" id="tab-import">
+            <div class="section-title">Import Custom Data</div>
+            <div class="upload-zone" id="upload-zone">
+              <i data-lucide="upload-cloud" class="upload-icon"></i>
+              <p class="upload-text">Drag & drop or click to upload</p>
+              <p class="upload-subtext">
+                Supports .geojson, .json, or zipped shapefiles (.zip)
+              </p>
+              <input
+                type="file"
+                id="file-input"
+                accept=".geojson,.json,.zip"
+                style="display: none"
+              />
+            </div>
+
+            <div id="import-options" class="import-options-card hidden">
+              <div class="option-field">
+                <label for="import-layer-name">Layer Name</label>
+                <input
+                  type="text"
+                  id="import-layer-name"
+                  placeholder="Enter Layer Name"
+                />
+              </div>
+              <div class="option-field">
+                <label for="import-layer-color">Layer Color</label>
+                <div class="color-picker-wrapper">
+                  <input type="color" id="import-layer-color" value="#3b82f6" />
+                  <span id="color-hex">#3b82f6</span>
+                </div>
+              </div>
+              <button id="btn-load-import" class="btn-primary">
+                Add to Map
+              </button>
+            </div>
+
+            <div class="section-title">Imported Layers</div>
+            <div id="imported-layers-list" class="layer-list">
+              <div class="empty-state">No custom layers imported yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- * Floating Trigger Button -->
+      <button id="controls-trigger" class="glass" title="Toggle Map Controls">
+        <i data-lucide="settings" id="trigger-icon"></i>
+      </button>
+    </div>
+
+    <!-- ? Layer Menu -->
+    <div class="layer-menu-container">
+      <button class="layer-menu-trigger">
+        <i class="fa-solid fa-ellipsis"></i>
+      </button>
+
+      <!-- ! LAYER BUTTON -->
+      <div class="layer-menu-dropdown">
+        <button class="layer-menu-item--icon-only" title="Zoom to Layer">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+
+        <button class="layer-menu-item--icon-only" title="Rename Layer">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+
+        <button
+          class="layer-menu-item--icon-only layer-menu-item--danger"
+          title="Delete Layer"
+        >
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ? Rename Validation Modal -->
+    <div id="rename-error-modal" class="modal-overlay hidden">
+      <div class="modal-card glass">
+        <div class="modal-header">
+          <i data-lucide="alert-triangle" class="modal-icon-warning"></i>
+          <h3>Name Already Exists</h3>
+        </div>
+        <div class="modal-body">
+          <p>
+            A layer named "<strong id="rename-error-name"></strong>" already
+            exists. Please choose a unique name.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-rename-error-ok" class="btn-primary">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ? Measuring Tool -->
+    <!-- Measurement Panel -->
+    <div class="measure-panel hidden" id="measure-panel">
+      <div class="measure-panel-header">Total distance <span>0 km</span></div>
+      <div class="measure-session-list"></div>
+      <div class="measure-panel-footer">
+        <button class="btn-new-measure" id="btn-new-measure">+ New line</button>
+        <button class="btn-clear-all" id="btn-clear-all">Clear all</button>
+      </div>
+    </div>
+
+    <!-- Measurement Tool Button-->
+    <div id="measure-control" class="measure-control">
+      <button id="measure-toggle" class="measure-btn" title="Measure distance">
+        <i data-lucide="ruler"></i>
+      </button>
+    </div>
+
+    <!-- Measurement Tooltip (follows cursor) -->
+    <div id="measure-tooltip" class="measure-tooltip hidden"></div>
+
+    <!-- ? Floating Details Panel (Top Left) -->
+    <div id="details-panel" class="floating-card glass hidden">
+      <button id="close-details" class="icon-btn" title="Close Details">
+        <i data-lucide="x"></i>
+      </button>
+      <div class="card-header">
+        <span class="card-tag" id="details-layer-type">Layer Name</span>
+        <h2 id="details-title">Feature Title</h2>
+      </div>
+      <div class="card-body" id="details-content">
+        <!-- Dynamic Properties Will Go Here -->
+        <div class="empty-state">
+          Click on any map boundary or feature to view detailed attributes.
+        </div>
+      </div>
+    </div>
+
+    <!-- ? Opacity Slider -->
+    <template id="opacity-slider-template">
+      <div
+        class="imported-layer-opacity"
+        title="Drag to adjust fill transparency"
+      >
+        <input
+          type="range"
+          class="opacity-slider"
+          min="0"
+          max="1"
+          step="0.05"
+          value="0.15"
+        />
+        <span class="opacity-value">15%</span>
+      </div>
+    </template>
+
+    <!-- Leaflet JS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <!-- Proj4 JS for Coordinate Reference Systems conversions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Shapefile parsing library shpjs -->
+    <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
+
+    <!-- Main Application Logic -->
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
