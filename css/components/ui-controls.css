@@ -1,4 +1,4 @@
-/* Controls Trigger Button */
+/* * === Controls Trigger Button === */
 #controls-trigger {
   width: 56px;
   height: 56px;
@@ -12,7 +12,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   transition: var(--transition-smooth);
   position: relative;
-  z-index: 1001;
+  z-index: 999;
 }
 
 #controls-trigger:hover {
@@ -37,21 +37,36 @@
   max-height: calc(100vh - 200px);
 }
 
-/* Adjust the Position of the Floating Controls Container (Bottom Right) */
-#controls-container {
+#cad-controls-wrapper {
   position: absolute;
   bottom: 20px;
   right: 20px;
   z-index: 1000;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* ! Change arrangement of the Trigger button */
   align-items: flex-end;
+  gap: 15px; /* space between trigger and panel above it */
+}
+
+/* No longer needs its own absolute position, the wrapper handles placement now */
+#cad-controls-container {
+  display: flex;
+}
+
+/* Floating Controls Container (Bottom Left) */
+#namria-controls-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* hugs the left edge to match left: 20px */
 }
 
 /* Controls Expandable Panel */
-#controls-panel {
+#cad-controls-panel {
   position: relative;
-  bottom: 15px; /* Offset from trigger button */
   right: 0;
   width: 420px;
   max-width: calc(100vw - 40px);
@@ -59,7 +74,16 @@
   overflow: hidden;
 }
 
-/* Floating Card / Glassmorphism Styles */
+#namria-controls-panel {
+  position: relative;
+  left: 0;
+  width: 420px;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+/* * === Floating Card / Glassmorphism Styles === */
 .glass {
   background: var(--bg-card);
   backdrop-filter: blur(14px);
@@ -87,7 +111,7 @@
   transform: translateY(15px) scale(0.95);
 }
 
-/* Panel Tabs ( Layers, Import ) */
+/* * === Panel Tabs ( Layers, Import ) === */
 .panel-tabs {
   display: flex;
   background: rgba(0, 0, 0, 0.2);
@@ -138,7 +162,7 @@
   gap: 12px;
 }
 
-/* * SOURCE TOGGLE */
+/* * SOURCE TOGGLE
 .source-toggle {
   display: flex;
   align-items: center;
@@ -183,9 +207,9 @@
 .source-btn:hover:not(.active) {
   background: rgba(255, 255, 255, 0.06);
   color: var(--text-primary);
-}
+} */
 
-/* Section Title */
+/* * === Section Title === */
 .section-title {
   font-family: var(--font-heading);
   font-size: 12px;
@@ -258,7 +282,14 @@
   background-color: var(--color-municipality);
 }
 
-/* Checkmark indicator */
+.layer-color {
+  border-color: var(--color-layers);
+}
+.control-checkbox input:checked ~ .layer-color {
+  background-color: var(--color-layers);
+}
+
+/* * === Checkmark indicator === */
 .checkbox-custom:after {
   content: "";
   position: absolute;
@@ -335,7 +366,7 @@
   color: var(--text-muted);
 }
 
-/* Import Options Card */
+/* * === Import Options Card === */
 .import-options-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-card);
@@ -404,4 +435,45 @@
 .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
+}
+
+/* * === Details Table Styling === */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.details-table tr:last-child {
+  border-bottom: none;
+}
+
+.details-table th,
+.details-table td {
+  padding: 8px 0;
+  font-size: 13px;
+  text-align: left;
+}
+
+.details-table th {
+  color: var(--text-secondary);
+  font-weight: 500;
+  width: 40%;
+  vertical-align: top;
+}
+
+.details-table td {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* * === Empty states === */
+.empty-state {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 30px 0;
+  font-style: italic;
 }

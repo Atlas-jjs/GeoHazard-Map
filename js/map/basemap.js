@@ -49,7 +49,7 @@ export const BasemapSwitcher = L.Control.extend({
     const layers = [
       { key: "satellite", label: "Satellite" },
       { key: "hybrid", label: "Hybrid" },
-      { key: "street", label: "Street" },
+      { key: "street", label: "Open Street" },
       { key: "topo", label: "Topography" },
     ];
 

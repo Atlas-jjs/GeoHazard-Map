@@ -295,7 +295,7 @@ function addCustomLayerToMap(geojson, name, color) {
   const style = {
     color: color,
     weight: 2.5,
-    fillOpacity: 0.15,
+    fillOpacity: 0.4,
     fillColor: color,
   };
 
@@ -414,58 +414,17 @@ document.addEventListener("click", () => closeAllMenus(null));
  * !important + an ID-scoped selector so it wins over whatever layout the
  * original (vertical, text-label) .layer-menu-dropdown rules used.
  */
-function injectHorizontalMenuStyles() {
-  if (document.getElementById("horizontal-layer-menu-styles")) return;
+// function injectHorizontalMenuStyles() {
+//   if (document.getElementById("horizontal-layer-menu-styles")) return;
 
-  const styleTag = document.createElement("style");
-  styleTag.id = "horizontal-layer-menu-styles";
-  styleTag.textContent = `
-    #imported-layers-list .layer-menu-dropdown {
-      display: none !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      gap: 4px !important;
-      position: absolute !important;
-      top: calc(100% + 6px) !important;
-      right: 0 !important;
-      left: auto !important;
-      background: #ffffff !important;
-      border: 1px solid #e2e2e2 !important;
-      border-radius: 8px !important;
-      padding: 4px !important;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14) !important;
-      z-index: 50 !important;
-      white-space: nowrap !important;
-    }
-    #imported-layers-list .layer-menu-dropdown.open {
-      display: flex !important;
-    }
-    #imported-layers-list .layer-menu-item {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      height: 30px !important;
-      padding: 0 10px !important;
-      margin: 0 !important;
-      border: none !important;
-      background: transparent !important;
-      border-radius: 6px !important;
-      cursor: pointer !important;
-      color: inherit !important;
-      font-size: 12px !important;
-      font-weight: 500 !important;
-      white-space: nowrap !important;
-    }
-    #imported-layers-list .layer-menu-item:hover {
-      background: rgba(0, 0, 0, 0.07) !important;
-    }
-    #imported-layers-list .layer-menu-item--danger:hover {
-      background: rgba(220, 38, 38, 0.12) !important;
-      color: #dc2626 !important;
-    }
-  `;
-  document.head.appendChild(styleTag);
-}
+//   const styleTag = document.createElement("style");
+//   styleTag.id = "horizontal-layer-menu-styles";
+//   styleTag.textContent = `
+
+//     }
+//   `;
+//   document.head.appendChild(styleTag);
+// }
 
 /* *
  * Synchronize tab list displaying imported layers with drag-and-drop reordering.
@@ -476,7 +435,7 @@ function injectHorizontalMenuStyles() {
  *   • ⋯ meatball menu (horizontal flyout) → Edit Color | Rename | Delete
  */
 function updateImportedLayersUI() {
-  injectHorizontalMenuStyles();
+  // injectHorizontalMenuStyles();
 
   const listContainer = document.getElementById("imported-layers-list");
   listContainer.innerHTML = "";
@@ -602,7 +561,7 @@ function updateImportedLayersUI() {
     const opacitySlider = opacityWrapper.querySelector(".opacity-slider"); // ? input
     const opacityValue = opacityWrapper.querySelector(".opacity-value"); // ? span
 
-    const initialOpacity = layerItem.style.fillOpacity ?? 0.15;
+    const initialOpacity = layerItem.style.fillOpacity ?? 0.4;
     opacitySlider.value = initialOpacity;
     opacitySlider.setAttribute(
       "aria-label",

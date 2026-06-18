@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CAR GeoPortal - Cordillera Geohazard & Land Use Map</title>
 
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="res/favicon.ico" type="image/x-icon" />
 
     <!-- Leaflet CSS -->
     <link
@@ -22,9 +22,8 @@
     <!-- ? Page Loading Overlay -->
     <div id="page-loader" class="page-loader">
       <div class="loader-content">
-        <!-- Swap this img for any SVG or image you want -->
-        <!-- <img src="your-logo.svg" alt="Loading" class="loader-logo" /> -->
-        <div class="loader-spinner"></div>
+        <img src="./res/Spinner.jpg" alt="Loading" class="loader-logo" />
+        <!-- <div class="loader-spinner"></div> -->
         <p class="loader-text">Loading map layers...</p>
       </div>
     </div>
@@ -32,17 +31,130 @@
     <!-- ? Full-screen Map Container -->
     <div id="map"></div>
 
-    <!-- ? Floating Controls Panel Container (Bottom Right) -->
-    <div id="controls-container">
-      <!-- Floating Expandable Control Panel -->
-      <div id="controls-panel" class="floating-card glass hidden">
+    <!-- ? Floating Controls Wrapper (Bottom Right) -->
+    <div id="cad-controls-wrapper">
+      <!-- ? Floating Controls Panel Container (Bottom Right) -->
+      <div id="cad-controls-container">
+        <!-- Floating Expandable Control Panel -->
+        <div id="cad-controls-panel" class="floating-card glass hidden">
+          <!-- Tabs Headers -->
+          <div class="panel-tabs">
+            <button class="tab-btn active" data-tab="layers">
+              <i data-lucide="layers"></i> Layers
+            </button>
+            <button class="tab-btn" data-tab="import">
+              <i data-lucide="upload-cloud"></i> Import
+            </button>
+          </div>
+
+          <!-- Tab Contents -->
+          <div class="panel-content">
+            <!-- Layers Tab -->
+            <div class="tab-pane active" id="tab-layers">
+              <div class="layer-list">
+                <!-- ? CAD -->
+                <label class="control-checkbox" id="wrap-cad-boundary">
+                  <input type="checkbox" id="layer-cad-boundary" checked />
+                  <span class="checkbox-custom boundary-color"></span>
+                  <span class="layer-label">CAD Boundary</span>
+                </label>
+                <label class="control-checkbox" id="wrap-cad-province">
+                  <input type="checkbox" id="layer-cad-province" />
+                  <span class="checkbox-custom province-color"></span>
+                  <span class="layer-label">CAD Provinces</span>
+                </label>
+                <label class="control-checkbox" id="wrap-cad-municipality">
+                  <input type="checkbox" id="layer-cad-municipality" />
+                  <span class="checkbox-custom municipality-color"></span>
+                  <span class="layer-label">CAD Municipalities</span>
+                </label>
+              </div>
+
+              <!-- ? Other Layers -->
+              <div class="layer-list">
+                <div class="section-title">Layers</div>
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-climate" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Climate</span>
+                </label>
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-erosion" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Erosion</span>
+                </label>
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-ngp" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">NGP</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Import Tab -->
+            <div class="tab-pane" id="tab-import">
+              <div class="section-title">Import Custom Data</div>
+              <div class="upload-zone" id="upload-zone">
+                <i data-lucide="upload-cloud" class="upload-icon"></i>
+                <p class="upload-text">Drag & drop or click to upload</p>
+                <p class="upload-subtext">
+                  Supports .geojson, .json, or zipped shapefiles (.zip)
+                </p>
+                <input
+                  type="file"
+                  id="file-input"
+                  accept=".geojson,.json,.zip"
+                  style="display: none"
+                />
+              </div>
+
+              <div id="import-options" class="import-options-card hidden">
+                <div class="option-field">
+                  <label for="import-layer-name">Layer Name</label>
+                  <input
+                    type="text"
+                    id="import-layer-name"
+                    placeholder="Enter Layer Name"
+                  />
+                </div>
+                <div class="option-field">
+                  <label for="import-layer-color">Layer Color</label>
+                  <div class="color-picker-wrapper">
+                    <input
+                      type="color"
+                      id="import-layer-color"
+                      value="#3b82f6"
+                    />
+                    <span id="color-hex">#3b82f6</span>
+                  </div>
+                </div>
+                <button id="btn-load-import" class="btn-primary">
+                  Add to Map
+                </button>
+              </div>
+
+              <div class="section-title">Imported Layers</div>
+              <div id="imported-layers-list" class="layer-list">
+                <div class="empty-state">No custom layers imported yet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- * Floating Trigger Button -->
+      <button id="controls-trigger" class="glass" title="Toggle Map Controls">
+        <i data-lucide="settings" id="trigger-icon"></i>
+      </button>
+    </div>
+
+    <!-- ? Floating Controls Panel Container (Bottom Left) -->
+    <div id="namria-controls-container">
+      <div id="namria-controls-panel" class="floating-card glass hidden">
         <!-- Tabs Headers -->
         <div class="panel-tabs">
           <button class="tab-btn active" data-tab="layers">
             <i data-lucide="layers"></i> Layers
-          </button>
-          <button class="tab-btn" data-tab="import">
-            <i data-lucide="upload-cloud"></i> Import
           </button>
         </div>
 
@@ -51,19 +163,9 @@
           <!-- Layers Tab -->
           <div class="tab-pane active" id="tab-layers">
             <div class="layer-list">
-              <div class="source-toggle">
-                <span class="source-toggle-label">Source</span>
-                <div class="source-toggle-btns">
-                  <button class="source-btn active" id="btn-src-namria">
-                    NAMRIA
-                  </button>
-                  <button class="source-btn" id="btn-src-cad">CAD</button>
-                </div>
-              </div>
-
               <!-- ? NAMRIA -->
               <label class="control-checkbox" id="wrap-namria-boundary">
-                <input type="checkbox" id="layer-namria-boundary" checked />
+                <input type="checkbox" id="layer-namria-boundary" />
                 <span class="checkbox-custom boundary-color"></span>
                 <span class="layer-label">NAMRIA Boundary</span>
               </label>
@@ -77,76 +179,10 @@
                 <span class="checkbox-custom municipality-color"></span>
                 <span class="layer-label">NAMRIA Municipalities</span>
               </label>
-
-              <!-- ? CAD (hidden by default) -->
-              <label class="control-checkbox hidden" id="wrap-cad-boundary">
-                <input type="checkbox" id="layer-cad-boundary" />
-                <span class="checkbox-custom boundary-color"></span>
-                <span class="layer-label">CAD Boundary</span>
-              </label>
-              <label class="control-checkbox hidden" id="wrap-cad-province">
-                <input type="checkbox" id="layer-cad-province" />
-                <span class="checkbox-custom province-color"></span>
-                <span class="layer-label">CAD Provinces</span>
-              </label>
-              <label class="control-checkbox hidden" id="wrap-cad-municipality">
-                <input type="checkbox" id="layer-cad-municipality" />
-                <span class="checkbox-custom municipality-color"></span>
-                <span class="layer-label">CAD Municipalities</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Import Tab -->
-          <div class="tab-pane" id="tab-import">
-            <div class="section-title">Import Custom Data</div>
-            <div class="upload-zone" id="upload-zone">
-              <i data-lucide="upload-cloud" class="upload-icon"></i>
-              <p class="upload-text">Drag & drop or click to upload</p>
-              <p class="upload-subtext">
-                Supports .geojson, .json, or zipped shapefiles (.zip)
-              </p>
-              <input
-                type="file"
-                id="file-input"
-                accept=".geojson,.json,.zip"
-                style="display: none"
-              />
-            </div>
-
-            <div id="import-options" class="import-options-card hidden">
-              <div class="option-field">
-                <label for="import-layer-name">Layer Name</label>
-                <input
-                  type="text"
-                  id="import-layer-name"
-                  placeholder="Enter Layer Name"
-                />
-              </div>
-              <div class="option-field">
-                <label for="import-layer-color">Layer Color</label>
-                <div class="color-picker-wrapper">
-                  <input type="color" id="import-layer-color" value="#3b82f6" />
-                  <span id="color-hex">#3b82f6</span>
-                </div>
-              </div>
-              <button id="btn-load-import" class="btn-primary">
-                Add to Map
-              </button>
-            </div>
-
-            <div class="section-title">Imported Layers</div>
-            <div id="imported-layers-list" class="layer-list">
-              <div class="empty-state">No custom layers imported yet.</div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- * Floating Trigger Button -->
-      <button id="controls-trigger" class="glass" title="Toggle Map Controls">
-        <i data-lucide="settings" id="trigger-icon"></i>
-      </button>
     </div>
 
     <!-- ? Layer Menu -->

@@ -5,6 +5,7 @@ import {
   highlightFeature,
   showFeatureDetails,
 } from "../components/featureDetails.js";
+import { buildCodeColorMap } from "../utils/colorUtils.js";
 
 let _map = null;
 
@@ -103,8 +104,22 @@ function renderGeoJSONLayer(key) {
     _map.removeLayer(layerInfo.leafletLayer);
   }
 
+  const codeField = layerInfo.codeField ?? "CODE";
+  const codeColorMap = buildCodeColorMap(
+    layerInfo.data,
+    layerInfo.codeColors,
+    codeField,
+  );
+  layerInfo.codeColorMap = codeColorMap;
+
   layerInfo.leafletLayer = L.geoJSON(layerInfo.data, {
-    style: layerInfo.style,
+    style: codeColorMap
+      ? (feature) => {
+          const code = String(feature.properties?.[codeField] ?? "");
+          const color = codeColorMap[code] ?? layerInfo.style.fillColor;
+          return { ...layerInfo.style, color, fillColor: color };
+        }
+      : layerInfo.style,
     onEachFeature: (feature, layer) => {
       // console.log(feature.properties);
 

@@ -3,6 +3,7 @@
 @import url("./components/basemap-switcher.css");
 @import url("./components/ui-controls.css");
 @import url("./components/measure-tool.css");
+@import url("./components/layer-menu.css");
 
 :root {
   /* Color Palette */
@@ -21,6 +22,7 @@
   --color-boundary: #3b82f6; /* Blue */
   --color-province: #06b6d4; /* Cyan */
   --color-municipality: #10b981; /* Emerald */
+  --color-layers: #ff8181; /* Light Purple */
 
   /* Typography */
   --font-heading: "Outfit", sans-serif;
@@ -64,7 +66,7 @@ html {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Buttons */
+/* * === Buttons === */
 .btn-primary {
   background: var(--accent);
   color: #ffffff;
@@ -83,7 +85,7 @@ html {
   box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
 }
 
-/* Page Loader Overlay */
+/* * === Page Loader Overlay === */
 .page-loader {
   position: fixed;
   inset: 0;
@@ -111,9 +113,11 @@ html {
 }
 
 .loader-logo {
-  width: 72px;
-  height: 72px;
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
   object-fit: contain;
+  animation: rotate 1.55s linear infinite;
 }
 
 .loader-spinner {
@@ -131,7 +135,7 @@ html {
   letter-spacing: 0.04em;
 }
 
-/* Fullscreen Map styling */
+/* * === Fullscreen Map styling ===  */
 #map {
   width: 100%;
   height: 100%;
@@ -139,10 +143,9 @@ html {
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: #0b0c10; /* Match base map theme background */
 }
 
-/* Floating Card / Glassmorphism Styles */
+/* * === Floating Card / Glassmorphism Styles === */
 .glass {
   background: var(--bg-card);
   backdrop-filter: blur(14px);
@@ -170,7 +173,7 @@ html {
   transform: translateY(15px) scale(0.95);
 }
 
-/* Details Panel (Top Left) */
+/* * === Details Panel (Top Left) === */
 #details-panel {
   top: 20px;
   left: 20px;
@@ -186,7 +189,7 @@ html {
   right: 16px;
 }
 
-/* Card Elements & Header */
+/* * === Card Elements & Header === */
 .card-header {
   padding: 24px 24px 16px 24px;
   border-bottom: 1px solid var(--border-card);
@@ -213,12 +216,12 @@ html {
 }
 
 .card-body {
-  padding: 20px 24px 24px 24px;
+  padding: 1.5rem;
   overflow-y: auto;
   flex-grow: 1;
 }
 
-/* Icon Button Styling */
+/* * === Icon Button Styling for the X Icon in the Details Pane === */
 .icon-btn {
   background: transparent;
   border: none;
@@ -232,12 +235,14 @@ html {
   justify-content: center;
   transition: var(--transition-smooth);
 }
+
 .icon-btn:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
 }
 
-.import-checkbox {
+/* ! Might Remove */
+/* .import-checkbox {
   height: 18px;
   width: 18px;
   border-radius: 50px;
@@ -245,10 +250,10 @@ html {
   margin-right: 12px;
   position: relative;
   transition: var(--transition-smooth);
-}
+} */
 
-/* Spinner and Loaders */
-.spinner-inline {
+/* todo === Inline Spinner and Loaders === */
+/* .spinner-inline {
   width: 14px;
   height: 14px;
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -293,112 +298,15 @@ html {
   height: 100%;
   background-color: var(--accent);
   transition: width 0.2s ease;
-}
+} */
 
-/* Stats styles */
-.stats-overview {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.stat-card {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-card);
-  border-radius: 10px;
-  padding: 12px;
-  text-align: center;
-}
-
-.stat-val {
-  font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.stat-lbl {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.stats-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.stat-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.01);
-  border-radius: 6px;
+/* todo #color-hex {
+  font-family: monospace;
   font-size: 13px;
-}
-
-.stat-item-lbl {
   color: var(--text-secondary);
-}
+} */
 
-.stat-item-val {
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.chart-container {
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid var(--border-card);
-  border-radius: 10px;
-  padding: 16px;
-  margin-top: 15px;
-}
-
-/* Details Table Styling */
-.details-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.details-table tr {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-.details-table tr:last-child {
-  border-bottom: none;
-}
-
-.details-table th,
-.details-table td {
-  padding: 8px 0;
-  font-size: 13px;
-  text-align: left;
-}
-
-.details-table th {
-  color: var(--text-secondary);
-  font-weight: 500;
-  width: 40%;
-  vertical-align: top;
-}
-
-.details-table td {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-/* Empty states */
-.empty-state {
-  color: var(--text-muted);
-  font-size: 13px;
-  text-align: center;
-  padding: 30px 0;
-  font-style: italic;
-}
-
-/* Keyframes Animations */
+/* * === Keyframes Animations === */
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -406,138 +314,4 @@ html {
   to {
     transform: rotate(360deg);
   }
-}
-
-/* Live Geohazard Marker Styles */
-.wind-arrow-icon {
-  color: #e0f2fe;
-  font-size: 18px;
-  line-height: 18px;
-  text-align: center;
-  text-shadow: 0 0 6px rgba(56, 189, 248, 0.85);
-  transform-origin: center center;
-}
-
-.wind-arrow-icon span {
-  display: block;
-}
-
-.map-legend {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-card);
-  border-radius: 10px;
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  min-width: 180px;
-  padding: 12px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
-}
-
-.map-legend-title {
-  font-family: var(--font-heading);
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-secondary);
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin: 6px 0;
-}
-
-.legend-swatch {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  flex: 0 0 12px;
-}
-
-.legend-line {
-  width: 18px;
-  height: 3px;
-  border-radius: 999px;
-  flex: 0 0 18px;
-}
-
-#color-hex {
-  font-family: monospace;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-/* Custom Imported Layers Item */
-.imported-layer-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-card);
-  border-radius: 8px;
-  transition: var(--transition-smooth);
-  margin-bottom: 6px;
-}
-
-.imported-layer-item:hover {
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.imported-layer-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-grow: 1;
-}
-
-.imported-layer-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.imported-layer-actions .icon-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.imported-layer-actions .btn-delete:hover {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-}
-
-/* Drag Handle */
-.drag-handle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  color: var(--text-muted);
-  cursor: grab;
-  flex-shrink: 0;
-  border-radius: 4px;
-  transition:
-    color 0.15s ease,
-    background 0.15s ease;
-}
-
-.drag-handle:active {
-  cursor: grabbing;
-}
-
-.imported-layer-item:hover .drag-handle {
-  color: var(--text-secondary);
-}
-
-.imported-layer-item.dragging .drag-handle {
-  color: var(--accent);
 }

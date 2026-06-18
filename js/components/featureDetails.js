@@ -3,8 +3,6 @@ import { AppState } from "../config.js";
 let highlightedFeature = null;
 const MAX_DISPLAY_ATTRIBUTES = 15;
 
-// Attribute Display Configuration
-
 /* *
  * Attributes always hidden regardless of layer.
  * Add any field names here you never want shown.
@@ -19,6 +17,9 @@ const VISIBLE_ATTRIBUTES = new Set([
   "LAT",
   "LON",
   "LONG",
+  "LONG",
+  "Hectares",
+  "Shape_Area",
 ]);
 
 /* *
@@ -227,8 +228,6 @@ function formatKeyLabel(key) {
     AREA_HA: "Area (Hectares)",
     Hectares: "Area (Hectares)",
     REGION: "Region",
-    Remarks: "Remarks",
-    REMARKS: "Remarks",
     Province: "Province Name",
     MUNICIPALI: "Municipality",
     BARANGAY: "Barangay",

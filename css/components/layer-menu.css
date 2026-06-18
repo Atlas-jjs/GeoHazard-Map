@@ -1,0 +1,115 @@
+/* * === Custom Imported Layers Item === */
+.imported-layer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  transition: var(--transition-smooth);
+  margin-bottom: 6px;
+}
+
+.imported-layer-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.imported-layer-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.imported-layer-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.imported-layer-actions .icon-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.imported-layer-actions .btn-delete:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+/* * === Drag Handle === */
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  cursor: grab;
+  flex-shrink: 0;
+  border-radius: 4px;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.imported-layer-item:hover .drag-handle {
+  color: var(--text-secondary);
+}
+
+.imported-layer-item.dragging .drag-handle {
+  color: var(--accent);
+}
+
+/* * === Meatball menu === */
+#imported-layers-list .layer-menu-dropdown {
+  display: none !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 4px !important;
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  right: 0 !important;
+  left: auto !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e2e2 !important;
+  border-radius: 8px !important;
+  padding: 4px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14) !important;
+  z-index: 50 !important;
+  white-space: nowrap !important;
+}
+
+#imported-layers-list .layer-menu-dropdown.open {
+  display: flex !important;
+}
+
+#imported-layers-list .layer-menu-item {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 30px !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  color: black !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+}
+
+#imported-layers-list .layer-menu-item:hover {
+  background: rgba(0, 0, 0, 0.07) !important;
+}
+
+#imported-layers-list .layer-menu-item--danger:hover {
+  background: rgba(220, 38, 38, 0.12) !important;
+  color: #dc2626 !important;
+}
