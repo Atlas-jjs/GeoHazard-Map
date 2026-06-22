@@ -33,6 +33,22 @@ function setupUIEventListeners() {
   });
 
   // Tab switching
+  // const tabBtn = document.querySelector(".tab-btn");
+  // const tabBtns = document.querySelectorAll(".tab-btn");
+  // const tabPanes = document.querySelectorAll(".tab-pane");
+
+  // tabBtn.addEventListener("click", () => {
+  //   const targetTab = tabBtn.getAttribute("data-tab");
+  //   // tabBtn.classList.remove("active");
+  //   // tabBtns.forEach((b) => b.classList.remove("active"));
+  //   tabBtn.classList.add("active");
+  //   tabPanes.forEach((pane) => {
+  //     pane.classList.remove("active");
+  //     if (pane.id === `tab-${targetTab}`) pane.classList.add("active");
+  //   });
+  // });
+
+  // Tab switching
   const tabBtns = document.querySelectorAll(".tab-btn");
   const tabPanes = document.querySelectorAll(".tab-pane");
 
@@ -45,6 +61,22 @@ function setupUIEventListeners() {
         pane.classList.remove("active");
         if (pane.id === `tab-${targetTab}`) pane.classList.add("active");
       });
+    });
+  });
+
+  document.querySelectorAll(".opacity-slider[data-layer]").forEach((slider) => {
+    const layerConfig = AppState.layers[slider.dataset.layer];
+    if (!layerConfig) return;
+
+    // Sync slider thumb to the configured starting opacity
+    slider.value = layerConfig.style.fillOpacity;
+
+    slider.addEventListener("input", (e) => {
+      const opacity = parseFloat(e.target.value);
+      layerConfig.style.fillOpacity = opacity;
+      if (layerConfig.leafletLayer) {
+        layerConfig.leafletLayer.setStyle({ fillOpacity: opacity });
+      }
     });
   });
 

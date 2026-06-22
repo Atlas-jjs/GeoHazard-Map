@@ -31,7 +31,7 @@
     <!-- ? Full-screen Map Container -->
     <div id="map"></div>
 
-    <!-- ? Floating Controls Wrapper (Bottom Right) -->
+    <!-- ? CAD Floating Controls Wrapper (Bottom Right) -->
     <div id="cad-controls-wrapper">
       <!-- ? Floating Controls Panel Container (Bottom Right) -->
       <div id="cad-controls-container">
@@ -73,25 +73,316 @@
               <!-- ? Other Layers -->
               <div class="layer-list">
                 <div class="section-title">Layers</div>
+                <!-- * Annual Crop -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-annual_crop" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Annual Crop</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="annual_crop"
+                    />
+                  </div>
+                </label>
+                <!-- * Brush / Shrubs -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-brush_shrubs" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Brush / Shrubs</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="brush_shrubs"
+                    />
+                  </div>
+                </label>
+                <!-- * Built-up -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-built_up" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Built Up</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="built_up"
+                    />
+                  </div>
+                </label>
+                <!-- * Closed Forest -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-closed_forest" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Closed Forest</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="closed_forest"
+                    />
+                  </div>
+                </label>
+                <!-- * Fishpond -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-fishpond" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Fishpond</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="fishpond"
+                    />
+                  </div>
+                </label>
+                <!-- * Grassland -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-grassland" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Grassland</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="grassland"
+                    />
+                  </div>
+                </label>
+                <!-- * Inland Water -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-inland_water" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Inland Water</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="inland_water"
+                    />
+                  </div>
+                </label>
+                <!-- * Open Forest -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-open_forest" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Open Forest</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="open_forest"
+                    />
+                  </div>
+                </label>
+                <!-- * Open Barren -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-open_barren" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Open Barren</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="open_barren"
+                    />
+                  </div>
+                </label>
+                <!-- * Perennial Crop -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-perennial_crop_2025" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Perennial Crop</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="perennial_crop_2025"
+                    />
+                  </div>
+                </label>
+                <!-- * Climate -->
                 <label class="control-checkbox">
                   <input type="checkbox" id="layer-climate" />
                   <span class="checkbox-custom layer-color"></span>
                   <span class="layer-label">Climate</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="climate"
+                    />
+                  </div>
                 </label>
+                <!-- * Erosion -->
                 <label class="control-checkbox">
                   <input type="checkbox" id="layer-erosion" />
                   <span class="checkbox-custom layer-color"></span>
                   <span class="layer-label">Erosion</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="erosion"
+                    />
+                  </div>
                 </label>
+                <!-- * Geology -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-geology" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Geology</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="geology"
+                    />
+                  </div>
+                </label>
+
+                <!-- * Forestland -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-forestland" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Forestland</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="forestland"
+                    />
+                  </div>
+                </label>
+                <!-- * A and D -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-a_and_d" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">A and D</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="a_and_d"
+                    />
+                  </div>
+                </label>
+
+                <!-- * Flood Susceptibility -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-flood_susceptibility" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Flood Susceptibility</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="flood_susceptibility"
+                    />
+                  </div>
+                </label>
+                <!-- * Fire Susceptibility -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-fire_susceptibility" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Fire Susceptibility</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="fire_susceptibility"
+                    />
+                  </div>
+                </label>
+                <!-- * Landslide Susceptibility -->
+                <label class="control-checkbox">
+                  <input type="checkbox" id="layer-flood_susceptibility" />
+                  <span class="checkbox-custom layer-color"></span>
+                  <span class="layer-label">Landslide Susceptibility</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="flood_susceptibility"
+                    />
+                  </div>
+                </label>
+                <!-- * NGP -->
                 <label class="control-checkbox">
                   <input type="checkbox" id="layer-ngp" />
                   <span class="checkbox-custom layer-color"></span>
                   <span class="layer-label">NGP</span>
+                  <div>
+                    <input
+                      type="range"
+                      class="opacity-slider"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      data-layer="ngp"
+                    />
+                  </div>
                 </label>
               </div>
             </div>
 
-            <!-- Import Tab -->
+            <!-- * Import Tab -->
             <div class="tab-pane" id="tab-import">
               <div class="section-title">Import Custom Data</div>
               <div class="upload-zone" id="upload-zone">
@@ -148,20 +439,18 @@
       </button>
     </div>
 
-    <!-- ? Floating Controls Panel Container (Bottom Left) -->
+    <!-- ? NAMRIA Floating Controls Panel Container (Bottom Left) -->
     <div id="namria-controls-container">
       <div id="namria-controls-panel" class="floating-card glass hidden">
         <!-- Tabs Headers -->
         <div class="panel-tabs">
-          <button class="tab-btn active" data-tab="layers">
-            <i data-lucide="layers"></i> Layers
-          </button>
+          <button class="active"><i data-lucide="layers"></i> Layers</button>
         </div>
 
         <!-- Tab Contents -->
         <div class="panel-content">
           <!-- Layers Tab -->
-          <div class="tab-pane active" id="tab-layers">
+          <div>
             <div class="layer-list">
               <!-- ? NAMRIA -->
               <label class="control-checkbox" id="wrap-namria-boundary">
@@ -185,7 +474,40 @@
       </div>
     </div>
 
-    <!-- ? Layer Menu -->
+    <!-- ! Use this if planning to add the import tab for the NAMRIA panel    
+    <div id="namria-controls-container">
+      <div id="namria-controls-panel" class="floating-card glass hidden">
+        <div class="panel-tabs">
+          <button class="tab-btn active" data-tab="layers">
+            <i data-lucide="layers"></i> Layers
+          </button>
+        </div>
+
+        <div class="panel-content">
+          <div class="tab-pane active" id="tab-layers">
+            <div class="layer-list">
+              <label class="control-checkbox" id="wrap-namria-boundary">
+                <input type="checkbox" id="layer-namria-boundary" />
+                <span class="checkbox-custom boundary-color"></span>
+                <span class="layer-label">NAMRIA Boundary</span>
+              </label>
+              <label class="control-checkbox" id="wrap-namria-province">
+                <input type="checkbox" id="layer-province" />
+                <span class="checkbox-custom province-color"></span>
+                <span class="layer-label">NAMRIA Provinces</span>
+              </label>
+              <label class="control-checkbox" id="wrap-namria-municipality">
+                <input type="checkbox" id="layer-municipality" />
+                <span class="checkbox-custom municipality-color"></span>
+                <span class="layer-label">NAMRIA Municipalities</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- ? Meatball Menu of Layer -->
     <div class="layer-menu-container">
       <button class="layer-menu-trigger">
         <i class="fa-solid fa-ellipsis"></i>
