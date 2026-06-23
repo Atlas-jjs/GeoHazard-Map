@@ -4,10 +4,7 @@ import {
   initLayerRenderer,
   loadDefaultLayers,
 } from "./js/map/layerRenderer.js";
-import {
-  restoreImportedLayers,
-  initImportManager,
-} from "./js/map/importManager.js";
+import { initImportManager } from "./js/map/importManager.js";
 import { initMeasureTool } from "./js/components/measureTool.js";
 
 let map = null;
@@ -17,17 +14,31 @@ document.addEventListener("DOMContentLoaded", () => {
   lucide.createIcons();
 
   // Bounds configuration for CAR, Philippines to lock pan/zoom view
-  const southWest = L.latLng(15.7, 119.5);
-  const northEast = L.latLng(18.9, 122.5);
+  const southWest = L.latLng(12.7, 114.0);
+  const northEast = L.latLng(22.0, 128.0);
   const mapBounds = L.latLngBounds(southWest, northEast);
 
   map = L.map("map", {
     maxBounds: mapBounds,
-    maxBoundsViscosity: 0.9,
+    maxBoundsViscosity: 1.0,
+    inertia: false,
     minZoom: 8,
     maxZoom: 18,
     zoomControl: true,
   }).setView([17.25, 120.9], 8);
+
+  // const southWest = L.latLng(15.7, 119.5);
+  // const northEast = L.latLng(18.9, 122.5);
+  // const mapBounds = L.latLngBounds(southWest, northEast);
+
+  // map = L.map("map", {
+  //   maxBounds: mapBounds,
+  //   maxBoundsViscosity: 1.0,
+  //   inertia: false,
+  //   minZoom: 8,
+  //   maxZoom: 18,
+  //   zoomControl: true,
+  // }).setView([17.25, 120.9], 8);
 
   // * Initial Measuring Tool
   initMeasureTool(map);

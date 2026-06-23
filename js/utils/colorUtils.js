@@ -20,14 +20,13 @@ export function hashStringToColor(str) {
 }
 
 /* *
- * Given a GeoJSON, build a { value: color } map from the CODE column.
- * Returns null if CODE column does not exist.
+ * Given a GeoJSON, build a { value: color } map
  * Known values use a fixed hex color (FIXED_CODE_COLORS); anything else
  * falls back to a deterministic hash-based HSL color.
  * @param {object} geojson
  * @returns {object|null}
  */
-export function buildCodeColorMap(geojson, fixedColors = {}, field = "CODE") {
+export function buildCodeColorMap(geojson, fixedColors = {}, field) {
   if (!geojson.features?.length) return null;
 
   const firstProps = geojson.features[0]?.properties ?? {};

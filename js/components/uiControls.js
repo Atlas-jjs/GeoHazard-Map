@@ -64,23 +64,131 @@ function setupUIEventListeners() {
     });
   });
 
-  document.querySelectorAll(".opacity-slider[data-layer]").forEach((slider) => {
-    const layerConfig = AppState.layers[slider.dataset.layer];
-    if (!layerConfig) return;
+  // ? Control the opacity of the fillColor of the layer
+  document
+    .querySelectorAll('.style-input[data-control="opacity"]')
+    .forEach((control) => {
+      const layerConfig = AppState.layers[control.dataset.layer];
+      if (!layerConfig) return;
 
-    // Sync slider thumb to the configured starting opacity
-    slider.value = layerConfig.style.fillOpacity;
+      const grip = control.querySelector(".opacity-grip");
+      const input = control.querySelector(".opacity-number-input");
 
-    slider.addEventListener("input", (e) => {
-      const opacity = parseFloat(e.target.value);
-      layerConfig.style.fillOpacity = opacity;
-      if (layerConfig.leafletLayer) {
-        layerConfig.leafletLayer.setStyle({ fillOpacity: opacity });
-      }
+      // Sync from AppState, no hardcoded value
+      input.value = Math.round(layerConfig.style.fillOpacity * 100);
+
+      const applyOpacity = (pct) => {
+        const clamped = Math.max(0, Math.min(100, Math.round(pct)));
+        input.value = clamped;
+        layerConfig.style.fillOpacity = clamped / 100;
+        if (layerConfig.leafletLayer) {
+          layerConfig.leafletLayer.setStyle({ fillOpacity: clamped / 100 });
+        }
+      };
+
+      grip.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const startX = e.clientX;
+        const startVal = parseInt(input.value);
+        document.body.style.cursor = "ew-resize";
+
+        const onMouseMove = (e) =>
+          applyOpacity(startVal + Math.round(e.clientX - startX));
+        const onMouseUp = () => {
+          document.body.style.cursor = "";
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        };
+
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+      });
+
+      input.addEventListener("click", (e) => e.stopPropagation());
+      input.addEventListener("change", (e) => {
+        e.stopPropagation();
+        applyOpacity(parseInt(e.target.value) || 0);
+      });
     });
+
+  // ? Control the "thickness" or weight of the borders of a layer
+  document
+    .querySelectorAll('.style-input[data-control="weight"]')
+    .forEach((control) => {
+      const layerConfig = AppState.layers[control.dataset.layer];
+      if (!layerConfig) return;
+
+      const grip = control.querySelector(".weight-grip");
+      const input = control.querySelector(".weight-number-input");
+
+      // Sync from AppState, no hardcoded value
+      input.value = layerConfig.style.weight ?? 1.5;
+
+      const applyWeight = (val) => {
+        const clamped = Math.max(0, Math.min(5, Math.round(val * 10) / 10));
+        input.value = clamped;
+        layerConfig.style.weight = clamped;
+        if (layerConfig.leafletLayer) {
+          layerConfig.leafletLayer.setStyle({ weight: clamped });
+        }
+      };
+
+      grip.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const startX = e.clientX;
+        const startVal = parseFloat(input.value);
+        document.body.style.cursor = "ew-resize";
+
+        const onMouseMove = (e) =>
+          applyWeight(startVal + ((e.clientX - startX) / 10) * 0.5);
+        const onMouseUp = () => {
+          document.body.style.cursor = "";
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        };
+
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+      });
+
+      input.addEventListener("click", (e) => e.stopPropagation());
+      input.addEventListener("change", (e) => {
+        e.stopPropagation();
+        applyWeight(parseFloat(e.target.value) || 0);
+      });
+    });
+
+  // ? Disable the NAMRIA Boundary and Provincial Layers if NAMRIA Municipalities is currently selected
+  const municipalityCheckbox = document.getElementById("layer-municipality");
+  const boundaryCheckbox = document.getElementById("layer-namria-boundary");
+  const provinceCheckbox = document.getElementById("layer-province");
+
+  const wrapBoundary = document.getElementById("wrap-namria-boundary");
+  const wrapProvince = document.getElementById("wrap-namria-province");
+
+  municipalityCheckbox?.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      [boundaryCheckbox, provinceCheckbox].forEach((cb) => {
+        if (!cb) return;
+        cb.checked = false;
+        cb.dispatchEvent(new Event("change"));
+      });
+
+      wrapBoundary?.classList.add("layer-disabled");
+      wrapProvince?.classList.add("layer-disabled");
+      boundaryCheckbox.disabled = true;
+      provinceCheckbox.disabled = true;
+    } else {
+      // Re-enable when municipality is unchecked
+      wrapBoundary?.classList.remove("layer-disabled");
+      wrapProvince?.classList.remove("layer-disabled");
+      boundaryCheckbox.disabled = false;
+      provinceCheckbox.disabled = false;
+    }
   });
 
-  // Layer checkboxes
   setupLayerCheckboxes();
 }
 
@@ -93,6 +201,16 @@ function setupLayerCheckboxes() {
     const layerInfo = AppState.layers[key];
     const checkbox = document.getElementById(layerInfo.id);
     if (!checkbox) return;
+
+    const checkboxCustom =
+      checkbox.parentElement.querySelector(".checkbox-custom");
+
+    if (checkboxCustom) {
+      checkboxCustom.addEventListener("click", () => {
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event("change"));
+      });
+    }
 
     checkbox.addEventListener("change", (e) => {
       layerInfo.checked = e.target.checked;

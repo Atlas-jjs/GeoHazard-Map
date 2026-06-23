@@ -53,332 +53,937 @@
             <div class="tab-pane active" id="tab-layers">
               <div class="layer-list">
                 <!-- ? CAD -->
-                <label class="control-checkbox" id="wrap-cad-boundary">
+                <div class="control-checkbox" id="wrap-cad-boundary">
                   <input type="checkbox" id="layer-cad-boundary" checked />
                   <span class="checkbox-custom boundary-color"></span>
                   <span class="layer-label">CAD Boundary</span>
-                </label>
-                <label class="control-checkbox" id="wrap-cad-province">
+                </div>
+                <div class="control-checkbox" id="wrap-cad-province">
                   <input type="checkbox" id="layer-cad-province" />
                   <span class="checkbox-custom province-color"></span>
                   <span class="layer-label">CAD Provinces</span>
-                </label>
-                <label class="control-checkbox" id="wrap-cad-municipality">
+                </div>
+                <div class="control-checkbox" id="wrap-cad-municipality">
                   <input type="checkbox" id="layer-cad-municipality" />
                   <span class="checkbox-custom municipality-color"></span>
                   <span class="layer-label">CAD Municipalities</span>
-                </label>
+                </div>
               </div>
 
               <!-- ? Other Layers -->
               <div class="layer-list">
-                <div class="section-title">Layers</div>
-                <!-- * Annual Crop -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-annual_crop" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Annual Crop</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="annual_crop"
-                    />
+                <div>
+                  <div class="title">Layers</div>
+                  <div class="section-title">Land Cover</div>
+                  <div class="sublayer-list">
+                    <!-- * Annual Crop -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-annual_crop" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Annual Crop</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="annual_crop"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="annual_crop"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Brush / Shrubs -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-brush_shrubs" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Brush / Shrubs</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="brush_shrubs"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="brush_shrubs"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Built Up -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-built_up" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Built Up</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="built_up"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="built_up"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Closed Forest -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-closed_forest" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Closed Forest</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="closed_forest"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="closed_forest"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Open Forest -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-open_forest" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Open Forest</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="open_forest"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="open_forest"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Open Barren -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-open_barren" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Open Barren</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="open_barren"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="open_barren"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Grassland -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-grassland" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Grassland</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="grassland"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="grassland"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Perennial Crop -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-perennial_crop_2025" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Perennial Crop</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="perennial_crop_2025"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="perennial_crop_2025"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Fishpond -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-fishpond" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Fishpond</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="fishpond"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="fishpond"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- * Inland Water -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="layer-inland_water" />
+                      <span class="checkbox-custom layer-color"></span>
+                      <span class="layer-label">Inland Water</span>
+                      <div class="layer-style-controls">
+                        <div
+                          class="style-input"
+                          data-layer="inland_water"
+                          data-control="opacity"
+                        >
+                          <i
+                            data-lucide="blend"
+                            class="style-input-icon opacity-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value opacity-number-input"
+                            min="0"
+                            max="100"
+                            step="5"
+                          />
+                          <span class="style-input-unit">%</span>
+                        </div>
+                        <div
+                          class="style-input"
+                          data-layer="inland_water"
+                          data-control="weight"
+                        >
+                          <i
+                            data-lucide="minus"
+                            class="style-input-icon weight-grip"
+                          ></i>
+                          <input
+                            type="number"
+                            class="style-input-value weight-number-input"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                          />
+                          <span class="style-input-unit">px</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </label>
-                <!-- * Brush / Shrubs -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-brush_shrubs" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Brush / Shrubs</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="brush_shrubs"
-                    />
-                  </div>
-                </label>
-                <!-- * Built-up -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-built_up" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Built Up</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="built_up"
-                    />
-                  </div>
-                </label>
-                <!-- * Closed Forest -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-closed_forest" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Closed Forest</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="closed_forest"
-                    />
-                  </div>
-                </label>
-                <!-- * Fishpond -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-fishpond" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Fishpond</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="fishpond"
-                    />
-                  </div>
-                </label>
-                <!-- * Grassland -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-grassland" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Grassland</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="grassland"
-                    />
-                  </div>
-                </label>
-                <!-- * Inland Water -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-inland_water" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Inland Water</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="inland_water"
-                    />
-                  </div>
-                </label>
-                <!-- * Open Forest -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-open_forest" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Open Forest</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="open_forest"
-                    />
-                  </div>
-                </label>
-                <!-- * Open Barren -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-open_barren" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Open Barren</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="open_barren"
-                    />
-                  </div>
-                </label>
-                <!-- * Perennial Crop -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-perennial_crop_2025" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Perennial Crop</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="perennial_crop_2025"
-                    />
-                  </div>
-                </label>
-                <!-- * Climate -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-climate" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Climate</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="climate"
-                    />
-                  </div>
-                </label>
-                <!-- * Erosion -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-erosion" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Erosion</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="erosion"
-                    />
-                  </div>
-                </label>
-                <!-- * Geology -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-geology" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Geology</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="geology"
-                    />
-                  </div>
-                </label>
 
-                <!-- * Forestland -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-forestland" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Forestland</span>
                   <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="forestland"
-                    />
+                    <div class="section-title">Land Classification</div>
+                    <div class="sublayer-list">
+                      <!-- * A and D -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="layer-a_and_d" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">A and D</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="a_and_d"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="a_and_d"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- * Forestland -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="layer-forestland" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">Forestland</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="forestland"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="forestland"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- * NGP -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="layer-ngp" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">NGP</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="ngp"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="ngp"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </label>
-                <!-- * A and D -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-a_and_d" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">A and D</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="a_and_d"
-                    />
-                  </div>
-                </label>
 
-                <!-- * Flood Susceptibility -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-flood_susceptibility" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Flood Susceptibility</span>
                   <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="flood_susceptibility"
-                    />
+                    <div class="section-title">Biophysical</div>
+                    <div class="sublayer-list">
+                      <!-- * Climate -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="layer-climate" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">Climate</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="climate"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="climate"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- * Slope -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="layer-slope" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">Slope</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="slope"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="slope"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- * Erosion -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="layer-erosion" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">Erosion</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="erosion"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="erosion"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- * Geology -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="layer-geology" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">Geology</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="geology"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="geology"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </label>
-                <!-- * Fire Susceptibility -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-fire_susceptibility" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Fire Susceptibility</span>
+
                   <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="fire_susceptibility"
-                    />
+                    <div class="section-title">Hazards</div>
+                    <div class="sublayer-list">
+                      <!-- * Flood Susceptibility -->
+                      <div class="control-checkbox">
+                        <input
+                          type="checkbox"
+                          id="layer-flood_susceptibility"
+                        />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">Flood Susceptibility</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="flood_susceptibility"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="flood_susceptibility"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- * Fire Susceptibility -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="layer-fire_susceptibility" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">Fire Susceptibility</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="fire_susceptibility"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="fire_susceptibility"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- * Landslide Susceptibility -->
+                      <div class="control-checkbox">
+                        <input
+                          type="checkbox"
+                          id="layer-landslide_susceptibility"
+                        />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label"
+                          >Landslide Susceptibility</span
+                        >
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="landslide_susceptibility"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="landslide_susceptibility"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </label>
-                <!-- * Landslide Susceptibility -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-flood_susceptibility" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">Landslide Susceptibility</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="flood_susceptibility"
-                    />
-                  </div>
-                </label>
-                <!-- * NGP -->
-                <label class="control-checkbox">
-                  <input type="checkbox" id="layer-ngp" />
-                  <span class="checkbox-custom layer-color"></span>
-                  <span class="layer-label">NGP</span>
-                  <div>
-                    <input
-                      type="range"
-                      class="opacity-slider"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      data-layer="ngp"
-                    />
-                  </div>
-                </label>
+                </div>
               </div>
             </div>
 
@@ -444,7 +1049,10 @@
       <div id="namria-controls-panel" class="floating-card glass hidden">
         <!-- Tabs Headers -->
         <div class="panel-tabs">
-          <button class="active"><i data-lucide="layers"></i> Layers</button>
+          <!-- ! Replace with tab-btn or use the template below -->
+          <button class="tab-btn-fixed">
+            <i data-lucide="layers"></i> Layers
+          </button>
         </div>
 
         <!-- Tab Contents -->
@@ -453,21 +1061,21 @@
           <div>
             <div class="layer-list">
               <!-- ? NAMRIA -->
-              <label class="control-checkbox" id="wrap-namria-boundary">
+              <div class="control-checkbox" id="wrap-namria-boundary">
                 <input type="checkbox" id="layer-namria-boundary" />
                 <span class="checkbox-custom boundary-color"></span>
                 <span class="layer-label">NAMRIA Boundary</span>
-              </label>
-              <label class="control-checkbox" id="wrap-namria-province">
+              </div>
+              <div class="control-checkbox" id="wrap-namria-province">
                 <input type="checkbox" id="layer-province" />
                 <span class="checkbox-custom province-color"></span>
                 <span class="layer-label">NAMRIA Provinces</span>
-              </label>
-              <label class="control-checkbox" id="wrap-namria-municipality">
+              </div>
+              <div class="control-checkbox" id="wrap-namria-municipality">
                 <input type="checkbox" id="layer-municipality" />
                 <span class="checkbox-custom municipality-color"></span>
                 <span class="layer-label">NAMRIA Municipalities</span>
-              </label>
+              </div>
             </div>
           </div>
         </div>

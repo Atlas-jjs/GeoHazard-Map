@@ -7,11 +7,6 @@ import {
   getHighlightedFeature,
   clearHighlightedFeature,
 } from "../components/featureDetails.js";
-// import {
-//   saveImportedLayerToDB,
-//   deleteImportedLayerFromDB,
-//   loadImportedLayersFromDB,
-// } from "./api.js";
 import { buildCodeColorMap } from "../utils/colorUtils.js";
 
 let _map = null;

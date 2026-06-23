@@ -48,7 +48,6 @@
   gap: 15px; /* space between trigger and panel above it */
 }
 
-/* No longer needs its own absolute position, the wrapper handles placement now */
 #cad-controls-container {
   display: flex;
 }
@@ -118,7 +117,8 @@
   border-bottom: 1px solid var(--border-card);
 }
 
-.tab-btn {
+.tab-btn,
+.tab-btn-fixed {
   flex: 1;
   background: transparent;
   border: none;
@@ -127,7 +127,6 @@
   font-size: 14px;
   font-weight: 600;
   padding: 16px 0;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,6 +136,7 @@
 }
 
 .tab-btn:hover {
+  cursor: pointer;
   color: var(--text-primary);
   background: rgba(255, 255, 255, 0.02);
 }
@@ -162,53 +162,16 @@
   gap: 12px;
 }
 
-/* * SOURCE TOGGLE
-.source-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 0;
-  margin: 4px 0;
-}
-
-.source-toggle-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
+/* * === Title === */
+.title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.source-toggle-btns {
-  display: flex;
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid var(--border-card);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.source-btn {
-  background: transparent;
-  border: none;
+  letter-spacing: 1.5px;
   color: var(--text-muted);
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 4px 12px;
-  cursor: pointer;
-  transition: var(--transition-smooth);
+  margin: 18px 0 0 0;
 }
-
-.source-btn.active {
-  background: var(--accent);
-  color: #ffffff;
-}
-
-.source-btn:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-primary);
-} */
-
 /* * === Section Title === */
 .section-title {
   font-family: var(--font-heading);
@@ -220,24 +183,31 @@
   margin: 18px 0 10px 0;
 }
 
+/* * === Subsection layer === */
+.sublayer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+.layer-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 .control-checkbox {
   display: flex;
   align-items: center;
-  cursor: pointer;
   font-size: 14px;
   color: var(--text-primary);
   user-select: none;
   transition: var(--transition-smooth);
 }
 
-.control-checkbox:hover {
-  transform: translateX(3px);
-}
-
 .control-checkbox input[type="checkbox"] {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
   height: 0;
   width: 0;
 }
@@ -254,9 +224,10 @@
   margin-right: 12px;
   position: relative;
   transition: var(--transition-smooth);
+  cursor: pointer;
 }
 
-/* Checkbox color codes and states */
+/* * Checkbox color codes and states */
 .control-checkbox input:checked ~ .checkbox-custom {
   border-color: transparent;
 }
@@ -476,4 +447,75 @@
   text-align: center;
   padding: 30px 0;
   font-style: italic;
+}
+
+/* * === Controls for the Opacity of the fillColor and Thickness of the weight */
+.layer-style-controls {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.style-input {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-card);
+  border-radius: 4px;
+  overflow: hidden;
+  height: 22px;
+  flex: 1;
+  transition: var(--transition-smooth);
+}
+
+.style-input:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+.style-input-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  padding: 0 4px;
+  color: var(--text-muted);
+  cursor: ew-resize;
+  border-right: 1px solid var(--border-card);
+  box-sizing: content-box;
+  transition: var(--transition-smooth);
+}
+
+.style-input-icon:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.style-input-value {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  padding: 0 2px;
+  -moz-appearance: textfield;
+}
+
+.style-input-value::-webkit-inner-spin-button,
+.style-input-value::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.style-input-value:focus {
+  outline: none;
+}
+
+.style-input-unit {
+  font-size: 10px;
+  color: var(--text-muted);
+  padding-right: 4px;
+  flex-shrink: 0;
 }
