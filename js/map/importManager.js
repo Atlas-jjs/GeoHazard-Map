@@ -23,36 +23,6 @@ export function initImportManager(map) {
   setupImportEventListeners();
 }
 
-/* *
- * Restore imported layers from IndexedDB cache on page load.
- */
-export async function restoreImportedLayers() {
-  try {
-    const savedLayers = await loadImportedLayersFromDB();
-    if (!savedLayers || savedLayers.length === 0) return;
-
-    // api.js returns sort_order from MySQL; sort ascending before rendering
-    savedLayers.sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
-
-    savedLayers.forEach((savedLayer) => {
-      if (savedLayer.needsProjection && savedLayer.data?.features) {
-        // Layer was stored in UTM (e.g. ENGP_2011_2025 is EPSG:32651).
-        // Re-project coordinates before handing off to renderCustomImportLayer.
-        projectFeaturesChunked(savedLayer.data.features, () => {
-          renderCustomImportLayer(savedLayer, false);
-        });
-      } else {
-        // Already WGS84 — render directly. Pass false to skip re-saving.
-        renderCustomImportLayer(savedLayer, false);
-      }
-    });
-
-    applyLayerZOrdering();
-  } catch (err) {
-    console.error("Failed to restore cached layers on startup:", err);
-  }
-}
-
 // Event Listeners
 function setupImportEventListeners() {
   const uploadZone = document.getElementById("upload-zone");
@@ -306,20 +276,18 @@ function addCustomLayerToMap(geojson, name, color) {
   };
 
   if (shouldProject(geojson)) {
-    // saveToDb fires inside the callback (default true) so the stored
-    // GeoJSON already contains WGS84 coordinates, not raw UTM values.
     projectFeaturesChunked(geojson.features, () => {
-      renderCustomImportLayer(customLayerItem, true);
+      renderCustomImportLayer(customLayerItem);
     });
   } else {
-    renderCustomImportLayer(customLayerItem, true);
+    renderCustomImportLayer(customLayerItem);
   }
 }
 
 /* *
- * Draw custom layer and bind interactions (with optional saving to DB cache).
+ * Draw custom layer and bind interactions.
  */
-function renderCustomImportLayer(layerItem, saveToDb = true) {
+function renderCustomImportLayer(layerItem) {
   const codeColorMap = layerItem.codeColorMap ?? null;
 
   layerItem.leafletLayer = L.geoJSON(layerItem.data, {
@@ -375,11 +343,6 @@ function renderCustomImportLayer(layerItem, saveToDb = true) {
 
   // Store in AppState
   AppState.importedLayers.push(layerItem);
-
-  // Save to IndexedDB if it's a fresh upload
-  if (saveToDb) {
-    persistLayerToDB(layerItem);
-  }
 
   // Align visual z-ordering
   applyLayerZOrdering();
@@ -525,7 +488,6 @@ function updateImportedLayersUI() {
         }
       }
       applyLayerZOrdering();
-      persistLayerToDB(layerItem);
     });
 
     const checkboxCustom = document.createElement("span");
@@ -595,7 +557,7 @@ function updateImportedLayersUI() {
       opacitySlider.dispatchEvent(new Event("input"));
     });
 
-    // Live update — no DB write on every tick
+    // Live update
     opacitySlider.addEventListener("input", (e) => {
       const newOpacity = parseFloat(e.target.value);
       layerItem.style.fillOpacity = newOpacity;
@@ -603,11 +565,6 @@ function updateImportedLayersUI() {
       if (layerItem.leafletLayer) {
         layerItem.leafletLayer.setStyle({ fillOpacity: newOpacity });
       }
-    });
-
-    // Persist only once the user releases
-    opacitySlider.addEventListener("change", () => {
-      persistLayerToDB(layerItem);
     });
 
     infoDiv.appendChild(opacityWrapper);
@@ -681,7 +638,6 @@ function updateImportedLayersUI() {
       });
 
       colorPicker.addEventListener("change", () => {
-        persistLayerToDB(layerItem);
         document.body.removeChild(colorPicker);
         // Refresh UI to sync the swatch/hex in the list
         updateImportedLayersUI();
@@ -746,7 +702,6 @@ function updateImportedLayersUI() {
             return;
           }
           layerItem.name = newName;
-          persistLayerToDB(layerItem);
         }
         updateImportedLayersUI();
       };
@@ -816,9 +771,6 @@ function reorderImportedLayers(draggedId, targetId) {
   // Re-align z-indexing on Leaflet Map
   applyLayerZOrdering();
 
-  // Save new indexes order database config
-  saveAllImportedLayersToDB();
-
   // Refresh DOM
   updateImportedLayersUI();
 }
@@ -843,7 +795,7 @@ function applyLayerZOrdering() {
 // Layer Removal
 
 /* *
- * Remove custom GeoJSON/Shapefile from memory, map, UI, and DB cache.
+ * Remove custom GeoJSON/Shapefile from memory, map, and UI.
  */
 function removeCustomLayer(id) {
   const index = AppState.importedLayers.findIndex((item) => item.id === id);
@@ -859,9 +811,6 @@ function removeCustomLayer(id) {
   // Remove registry entry
   AppState.importedLayers.splice(index, 1);
 
-  // DB persistence is currently disabled (see persistLayerToDB) — skip cache delete too
-  // deleteImportedLayerFromDB(id);
-
   // Close features metadata panel if details belong to the deleted dataset
   const highlighted = getHighlightedFeature();
   if (
@@ -875,22 +824,4 @@ function removeCustomLayer(id) {
 
   // Redraw list container
   updateImportedLayersUI();
-}
-// Database Helpers
-
-/* *
- * Persist a layer to IndexedDB with its current order index.
- */
-function persistLayerToDB(layerItem) {
-  // const order = AppState.importedLayers.findIndex((l) => l.id === layerItem.id);
-  // saveImportedLayerToDB(layerItem, order);
-}
-
-/* *
- * Save all imported layers with their current index order to IndexedDB.
- */
-function saveAllImportedLayersToDB() {
-  // AppState.importedLayers.forEach((layerItem) => {
-  //   persistLayerToDB(layerItem);
-  // });
 }

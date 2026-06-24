@@ -104,18 +104,18 @@ function renderGeoJSONLayer(key) {
     _map.removeLayer(layerInfo.leafletLayer);
   }
 
-  const codeField = layerInfo.codeField ?? "CODE";
+  const colorField = layerInfo.colorField;
   const codeColorMap = buildCodeColorMap(
     layerInfo.data,
     layerInfo.codeColors,
-    codeField,
+    colorField,
   );
   layerInfo.codeColorMap = codeColorMap;
 
   layerInfo.leafletLayer = L.geoJSON(layerInfo.data, {
     style: codeColorMap
       ? (feature) => {
-          const code = String(feature.properties?.[codeField] ?? "");
+          const code = String(feature.properties?.[colorField] ?? "");
           const color = codeColorMap[code] ?? layerInfo.style.fillColor;
           return { ...layerInfo.style, color, fillColor: color };
         }

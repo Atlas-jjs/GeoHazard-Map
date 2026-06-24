@@ -1,6 +1,6 @@
-// Coordinate projection utilities for EPSG:32651 (UTM Zone 51N) to EPSG:4326 (WGS84)
+// * Coordinate projection utilities for EPSG:32651 (UTM Zone 51N) to EPSG:4326 (WGS84)
 
-/**
+/*
  * Register the EPSG:32651 projection definition with proj4.
  * Must be called once before any projection operations.
  */
@@ -11,7 +11,7 @@ export function initProjection() {
   );
 }
 
-/**
+/*
  * Check if a GeoJSON dataset needs coordinate conversion from UTM to WGS84.
  * Detects by CRS metadata or by inspecting coordinate magnitude.
  */
@@ -34,7 +34,7 @@ export function shouldProject(geojson) {
   return false;
 }
 
-/**
+/* *
  * Convert EPSG:32651 coordinates to WGS84 in chunks to avoid freezing the UI.
  * @param {Array} features - GeoJSON features array
  * @param {Function} onDone - Callback when all features are projected

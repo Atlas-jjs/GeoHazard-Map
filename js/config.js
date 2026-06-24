@@ -99,7 +99,7 @@ export const AppState = {
       leafletLayer: null,
       checked: false,
       url: "data/geojson/cadastre/CAR_Climate.geojson",
-      codeField: "CODE",
+      colorField: "CODE",
       style: {
         weight: 1,
         fillOpacity: 1,
@@ -119,7 +119,7 @@ export const AppState = {
       leafletLayer: null,
       checked: false,
       url: "data/geojson/cadastre/NGP_2011_2025.geojson",
-      codeField: "YR_ESTAB",
+      colorField: "YR_ESTAB",
       style: {
         weight: 1,
         fillOpacity: 1,
@@ -149,7 +149,7 @@ export const AppState = {
       leafletLayer: null,
       checked: false,
       url: "data/geojson/cadastre/CAR_Slope_Optimized.geojson",
-      codeField: "SL_Cate",
+      colorField: "SL_Cate",
       style: {
         weight: 1,
         fillOpacity: 1,
@@ -170,7 +170,7 @@ export const AppState = {
       leafletLayer: null,
       checked: false,
       url: "data/geojson/cadastre/CAR_Erosion.geojson",
-      codeField: "Erosion",
+      colorField: "Erosion",
       style: {
         weight: 1,
         fillOpacity: 1,
@@ -390,7 +390,7 @@ export const AppState = {
       leafletLayer: null,
       checked: false,
       url: "data/geojson/cadastre/CAR_Flood_Susceptibility.geojson",
-      codeField: "FloodSusc",
+      colorField: "FloodSusc",
       style: {
         weight: 1,
         fillOpacity: 1,
@@ -410,7 +410,7 @@ export const AppState = {
       leafletLayer: null,
       checked: false,
       url: "data/geojson/cadastre/CAR_Fire_Susceptibility.geojson",
-      codeField: "Risk_Class",
+      colorField: "Risk_Class",
       style: {
         weight: 1,
         fillOpacity: 1,
@@ -431,7 +431,7 @@ export const AppState = {
       leafletLayer: null,
       checked: false,
       url: "data/geojson/cadastre/CAR_Landslide_Susceptibility.geojson",
-      codeField: "LndslideSu",
+      colorField: "LndslideSu",
       style: {
         weight: 1,
         fillOpacity: 1,
