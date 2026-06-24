@@ -1,15 +1,10 @@
 // * Coordinate projection utilities for EPSG:32651 (UTM Zone 51N) to EPSG:4326 (WGS84)
 
-/*
- * Register the EPSG:32651 projection definition with proj4.
- * Must be called once before any projection operations.
- */
-export function initProjection() {
-  proj4.defs(
-    "EPSG:32651",
-    "+proj=utm +zone=51 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",
-  );
-}
+// Auto-register on module load
+proj4.defs(
+  "EPSG:32651",
+  "+proj=utm +zone=51 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",
+);
 
 /*
  * Check if a GeoJSON dataset needs coordinate conversion from UTM to WGS84.
@@ -17,7 +12,8 @@ export function initProjection() {
  */
 export function shouldProject(geojson) {
   if (geojson.crs && geojson.crs.properties && geojson.crs.properties.name) {
-    return geojson.crs.properties.name.includes("32651");
+    const name = geojson.crs.properties.name;
+    if (name.includes("32651")) return true;
   }
   if (geojson.features && geojson.features.length > 0) {
     const firstFeature = geojson.features[0];
@@ -26,6 +22,7 @@ export function shouldProject(geojson) {
         firstFeature.geometry.coordinates,
         firstFeature.geometry.type,
       );
+      // UTM easting values for Zone 51N are typically 100,000–900,000 m
       if (firstCoord && firstCoord[0] > 180) {
         return true;
       }
@@ -66,7 +63,7 @@ export function projectFeaturesChunked(features, onDone, onProgress) {
   process();
 }
 
-// Internal Helpers
+// ? === Internal Helpers ===
 function projectFeature(feature) {
   if (feature && feature.geometry) {
     feature.geometry.coordinates = projectGeometryCoords(

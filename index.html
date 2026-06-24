@@ -1170,15 +1170,18 @@
       </div>
     </div>
 
-    <!-- Measurement Tool Button-->
-    <div id="measure-control" class="measure-control">
-      <button id="measure-toggle" class="measure-btn" title="Measure distance">
-        <i data-lucide="ruler"></i>
-      </button>
-    </div>
-
     <!-- Measurement Tooltip (follows cursor) -->
     <div id="measure-tooltip" class="measure-tooltip hidden"></div>
+
+    <!-- ? Tools Button-->
+    <div id="tool-control" class="tool-control">
+      <button id="measure-toggle" class="tool-btn" title="Measure distance">
+        <i data-lucide="ruler"></i>
+      </button>
+      <button id="btn-screenshot" class="tool-btn" title="Take Screenshot">
+        <i data-lucide="camera"></i>
+      </button>
+    </div>
 
     <!-- ? Floating Details Panel (Top Left) -->
     <div id="details-panel" class="floating-card glass hidden">
@@ -1214,6 +1217,32 @@
         <span class="opacity-value">15%</span>
       </div>
     </template>
+
+    <!-- ? Screenshot Preview Modal -->
+    <div id="screenshot-preview-modal" class="hidden">
+      <div class="screenshot-preview-card glass">
+        <div class="screenshot-preview-header">
+          <span class="screenshot-preview-title">
+            <i data-lucide="image"></i>
+            Screenshot Preview
+          </span>
+        </div>
+        <img
+          id="screenshot-preview-img"
+          alt="Feature details screenshot preview"
+        />
+        <div class="screenshot-preview-actions">
+          <button id="btn-close-preview">Cancel</button>
+          <button id="btn-download-screenshot">
+            <i data-lucide="download"></i>
+            Download PNG
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <!-- Leaflet JS -->
     <script

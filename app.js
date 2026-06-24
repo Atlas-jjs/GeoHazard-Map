@@ -6,6 +6,7 @@ import {
 } from "./js/map/layerRenderer.js";
 import { initImportManager } from "./js/map/importManager.js";
 import { initMeasureTool } from "./js/components/measureTool.js";
+import { initScreenshot } from "./js/components/screenshot.js";
 
 let map = null;
 
@@ -27,18 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     zoomControl: true,
   }).setView([17.25, 120.9], 8);
 
-  // const southWest = L.latLng(15.7, 119.5);
-  // const northEast = L.latLng(18.9, 122.5);
-  // const mapBounds = L.latLngBounds(southWest, northEast);
-
-  // map = L.map("map", {
-  //   maxBounds: mapBounds,
-  //   maxBoundsViscosity: 1.0,
-  //   inertia: false,
-  //   minZoom: 8,
-  //   maxZoom: 18,
-  //   zoomControl: true,
-  // }).setView([17.25, 120.9], 8);
+  console.log(map);
 
   // * Initial Measuring Tool
   initMeasureTool(map);
@@ -58,5 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initLayerRenderer(map);
   initUIControls(map);
   initImportManager(map);
+  initScreenshot(map);
   loadDefaultLayers();
 });
