@@ -210,7 +210,7 @@ async function captureWithMap(map) {
   const screenshotBtn = document.getElementById("btn-screenshot");
 
   const toHide = [
-    document.querySelector(".details-icons"),
+    screenshotBtn,
     document.getElementById("cad-controls-wrapper"),
     document.getElementById("namria-controls-container"),
     document.getElementById("tool-control"),
@@ -220,10 +220,10 @@ async function captureWithMap(map) {
   ].filter(Boolean);
 
   // Loading state
-  screenshotBtn.innerHTML = '<i data-lucide="loader-2"></i>';
-  screenshotBtn.classList.add("screenshot-btn--loading");
-  screenshotBtn.disabled = true;
-  lucide.createIcons();
+  screenshotBtn.style.display = "none";
+  // screenshotBtn.classList.add("screenshot-btn--loading");
+  // screenshotBtn.disabled = true;
+  // lucide.createIcons();
 
   toHide.forEach((el) => (el.style.visibility = "hidden"));
 
@@ -279,9 +279,10 @@ async function captureWithMap(map) {
     console.error("[Screenshot] Capture failed:", err);
     restore();
   } finally {
-    screenshotBtn.innerHTML = '<i data-lucide="camera"></i>';
-    screenshotBtn.classList.remove("screenshot-btn--loading");
-    screenshotBtn.disabled = false;
+    screenshotBtn.style.display = "block";
+    // screenshotBtn.innerHTML = '<i data-lucide="camera"></i>';
+    // screenshotBtn.classList.remove("screenshot-btn--loading");
+    // screenshotBtn.disabled = false;
     lucide.createIcons();
   }
 }
