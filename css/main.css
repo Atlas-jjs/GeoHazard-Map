@@ -156,11 +156,20 @@ html {
   overflow-y: auto;
 }
 
-#close-details {
+.details-icons {
   position: absolute;
   top: 16px;
   right: 16px;
+  display: flex;
+  gap: 4px;
 }
+
+/* ! If there will be screenshot icon on the feature modal */
+/* #close-details {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+} */
 
 /* * === Card Elements & Header === */
 .card-header {
@@ -194,7 +203,7 @@ html {
   flex-grow: 1;
 }
 
-/* * === Icon Button Styling for the X Icon in the Details Pane === */
+/* * === Icon Button Styling for the X and Camera Icon in the Details Pane === */
 .icon-btn {
   background: transparent;
   border: none;

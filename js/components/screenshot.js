@@ -210,6 +210,7 @@ async function captureWithMap(map) {
   const screenshotBtn = document.getElementById("btn-screenshot");
 
   const toHide = [
+    document.querySelector(".details-icons"),
     document.getElementById("cad-controls-wrapper"),
     document.getElementById("namria-controls-container"),
     document.getElementById("tool-control"),
