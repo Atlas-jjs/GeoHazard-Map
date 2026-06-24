@@ -5,6 +5,7 @@
 @import url("./components/measure-tool.css");
 @import url("./components/layer-menu.css");
 @import url("./components/screenshot.css");
+@import url("./components/3dmap.css");
 
 :root {
   /* Color Palette */
@@ -50,6 +51,10 @@ html {
   color: var(--text-primary);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+body {
+  perspective: 1200px;
 }
 
 /* Scrollbar Customization */
@@ -226,7 +231,7 @@ html {
 /* * Tools (Measurement and Screenshot) */
 .tool-control {
   position: absolute;
-  top: 175px;
+  top: 205px;
   right: 12px;
   z-index: 1;
   display: flex;

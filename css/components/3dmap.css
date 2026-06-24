@@ -1,0 +1,53 @@
+/* * 3D Map Container */
+#map-3d {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+body.mode-3d #map-3d {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Fade out Leaflet layers in 3D mode so the 3D map is visible */
+.leaflet-map-pane {
+  transition: opacity 0.8s ease;
+}
+
+body.mode-3d .leaflet-map-pane {
+  opacity: 0;
+  pointer-events: none;
+  display: none !important; /* completely disables rendering to fix lag */
+}
+
+/* Allow mouse interactions to pass through Leaflet container to MapLibre,
+   while keeping Leaflet control elements active and clickable */
+body.mode-3d #map {
+  pointer-events: none;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+body.mode-3d .leaflet-control-container,
+body.mode-3d .leaflet-control {
+  pointer-events: auto;
+}
+
+/* Hide all modals, floating control dashboards, tools, and overlays in 3D mode, except the basemap switcher */
+body.mode-3d #details-panel,
+body.mode-3d #cad-controls-wrapper,
+body.mode-3d #namria-controls-container,
+body.mode-3d #tool-control,
+body.mode-3d .measure-tooltip,
+body.mode-3d .modal-overlay,
+body.mode-3d #measure-panel,
+body.mode-3d .leaflet-bar {
+  display: none !important;
+}

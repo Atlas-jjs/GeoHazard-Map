@@ -28,8 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     zoomControl: true,
   }).setView([17.25, 120.9], 8);
 
-  console.log(map);
-
   // * Initial Measuring Tool
   initMeasureTool(map);
 
