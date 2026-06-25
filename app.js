@@ -4,7 +4,7 @@ import {
   initLayerRenderer,
   loadDefaultLayers,
 } from "./js/map/layerRenderer.js";
-import { initImportManager } from "./js/map/importManager.js";
+import { initImportManager } from "./js/map/importManager/importManager.js";
 import { initMeasureTool } from "./js/components/measureTool.js";
 import { initScreenshot } from "./js/components/screenshot.js";
 

@@ -64,101 +64,8 @@ function setupUIEventListeners() {
     });
   });
 
-  // ? Control the opacity of the fillColor of the layer
-  document
-    .querySelectorAll('.style-input[data-control="opacity"]')
-    .forEach((control) => {
-      const layerConfig = AppState.layers[control.dataset.layer];
-      if (!layerConfig) return;
-
-      const grip = control.querySelector(".opacity-grip");
-      const input = control.querySelector(".opacity-number-input");
-
-      // Sync from AppState, no hardcoded value
-      input.value = Math.round(layerConfig.style.fillOpacity * 100);
-
-      const applyOpacity = (pct) => {
-        const clamped = Math.max(0, Math.min(100, Math.round(pct)));
-        input.value = clamped;
-        layerConfig.style.fillOpacity = clamped / 100;
-        if (layerConfig.leafletLayer) {
-          layerConfig.leafletLayer.setStyle({ fillOpacity: clamped / 100 });
-        }
-      };
-
-      grip.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const startX = e.clientX;
-        const startVal = parseInt(input.value);
-        document.body.style.cursor = "ew-resize";
-
-        const onMouseMove = (e) =>
-          applyOpacity(startVal + Math.round(e.clientX - startX));
-        const onMouseUp = () => {
-          document.body.style.cursor = "";
-          document.removeEventListener("mousemove", onMouseMove);
-          document.removeEventListener("mouseup", onMouseUp);
-        };
-
-        document.addEventListener("mousemove", onMouseMove);
-        document.addEventListener("mouseup", onMouseUp);
-      });
-
-      input.addEventListener("click", (e) => e.stopPropagation());
-      input.addEventListener("change", (e) => {
-        e.stopPropagation();
-        applyOpacity(parseInt(e.target.value) || 0);
-      });
-    });
-
-  // ? Control the "thickness" or weight of the borders of a layer
-  document
-    .querySelectorAll('.style-input[data-control="weight"]')
-    .forEach((control) => {
-      const layerConfig = AppState.layers[control.dataset.layer];
-      if (!layerConfig) return;
-
-      const grip = control.querySelector(".weight-grip");
-      const input = control.querySelector(".weight-number-input");
-
-      // Sync from AppState, no hardcoded value
-      input.value = layerConfig.style.weight ?? 1.5;
-
-      const applyWeight = (val) => {
-        const clamped = Math.max(0, Math.min(5, Math.round(val * 10) / 10));
-        input.value = clamped;
-        layerConfig.style.weight = clamped;
-        if (layerConfig.leafletLayer) {
-          layerConfig.leafletLayer.setStyle({ weight: clamped });
-        }
-      };
-
-      grip.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const startX = e.clientX;
-        const startVal = parseFloat(input.value);
-        document.body.style.cursor = "ew-resize";
-
-        const onMouseMove = (e) =>
-          applyWeight(startVal + ((e.clientX - startX) / 10) * 0.5);
-        const onMouseUp = () => {
-          document.body.style.cursor = "";
-          document.removeEventListener("mousemove", onMouseMove);
-          document.removeEventListener("mouseup", onMouseUp);
-        };
-
-        document.addEventListener("mousemove", onMouseMove);
-        document.addEventListener("mouseup", onMouseUp);
-      });
-
-      input.addEventListener("click", (e) => e.stopPropagation());
-      input.addEventListener("change", (e) => {
-        e.stopPropagation();
-        applyWeight(parseFloat(e.target.value) || 0);
-      });
-    });
+  initOpacityControls();
+  initWeightControls();
 
   // ? Disable the NAMRIA Boundary and Provincial Layers if NAMRIA Municipalities is currently selected
   const municipalityCheckbox = document.getElementById("layer-municipality");
@@ -227,5 +134,95 @@ function setupLayerCheckboxes() {
         }
       }
     });
+  });
+}
+
+function initOpacityControls() {
+  document
+    .querySelectorAll('.style-input[data-control="opacity"]')
+    .forEach((control) => {
+      const layerConfig = AppState.layers[control.dataset.layer];
+      if (!layerConfig) return;
+
+      const grip = control.querySelector(".opacity-grip");
+      const input = control.querySelector(".opacity-number-input");
+
+      input.value = Math.round(layerConfig.style.fillOpacity * 100);
+
+      const applyOpacity = (pct) => {
+        const clamped = Math.max(0, Math.min(100, Math.round(pct)));
+        input.value = clamped;
+        layerConfig.style.fillOpacity = clamped / 100;
+        layerConfig.leafletLayer?.setStyle({ fillOpacity: clamped / 100 });
+      };
+
+      makeDragGrip(grip, () => parseInt(input.value), applyOpacity);
+
+      input.addEventListener("click", (e) => e.stopPropagation());
+      input.addEventListener("change", (e) => {
+        e.stopPropagation();
+        applyOpacity(parseInt(e.target.value) || 0);
+      });
+    });
+}
+
+function initWeightControls() {
+  document
+    .querySelectorAll('.style-input[data-control="weight"]')
+    .forEach((control) => {
+      const layerConfig = AppState.layers[control.dataset.layer];
+      if (!layerConfig) return;
+
+      const grip = control.querySelector(".weight-grip");
+      const input = control.querySelector(".weight-number-input");
+
+      input.value = layerConfig.style.weight ?? 1.5;
+
+      const applyWeight = (val) => {
+        const clamped = Math.max(0, Math.min(5, Math.round(val * 10) / 10));
+        input.value = clamped;
+        layerConfig.style.weight = clamped;
+        layerConfig.leafletLayer?.setStyle({ weight: clamped });
+      };
+
+      // sensitivity: 0.05 keeps weight changes slow and fine-grained
+      makeDragGrip(grip, () => parseFloat(input.value), applyWeight, 0.05);
+
+      input.addEventListener("click", (e) => e.stopPropagation());
+      input.addEventListener("change", (e) => {
+        e.stopPropagation();
+        applyWeight(parseFloat(e.target.value) || 0);
+      });
+    });
+}
+
+function makeDragGrip(grip, getValue, applyFn, sensitivity = 1) {
+  // Guard: if already initialized, skip — prevents stacked listeners on re-render
+  if (grip.dataset.dragInit === "true") return;
+  grip.dataset.dragInit = "true";
+
+  grip.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    grip.setPointerCapture(e.pointerId);
+
+    const startX = e.clientX;
+    const startVal = getValue();
+    document.body.style.cursor = "ew-resize";
+
+    const onMove = (e) =>
+      applyFn(startVal + (e.clientX - startX) * sensitivity);
+
+    const onUp = () => {
+      document.body.style.cursor = "";
+      grip.removeEventListener("pointermove", onMove);
+      grip.removeEventListener("pointerup", onUp);
+      grip.removeEventListener("pointercancel", onUp);
+    };
+
+    grip.addEventListener("pointermove", onMove);
+    grip.addEventListener("pointerup", onUp);
+    grip.addEventListener("pointercancel", onUp);
   });
 }

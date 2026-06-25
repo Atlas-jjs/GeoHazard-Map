@@ -1214,23 +1214,70 @@
       </div>
     </div>
 
-    <!-- ? Opacity Slider -->
-    <template id="opacity-slider-template">
-      <div
-        class="imported-layer-opacity"
-        title="Drag to adjust fill transparency"
-      >
-        <input
-          type="range"
-          class="opacity-slider"
-          min="0"
-          max="1"
-          step="0.05"
-          value="0.15"
-        />
-        <span class="opacity-value">15%</span>
+    <!-- ? Rename Layer Modal -->
+    <div id="layer-rename-modal" class="modal-overlay hidden">
+      <div class="modal-card glass">
+        <div class="modal-header">
+          <i data-lucide="pencil" class="modal-icon-accent"></i>
+          <h3>Rename Layer</h3>
+        </div>
+        <div class="modal-body">
+          <label for="layer-rename-input">Layer name</label>
+          <input
+            type="text"
+            id="layer-rename-input"
+            class="modal-text-input"
+            placeholder="Enter new name"
+          />
+        </div>
+        <div class="modal-footer">
+          <button id="btn-rename-cancel" class="btn-secondary">Cancel</button>
+          <button id="btn-rename-save" class="btn-primary">Save</button>
+        </div>
       </div>
-    </template>
+    </div>
+
+    <!-- ? Change Layer Color Modal -->
+    <div id="layer-color-modal" class="modal-overlay hidden">
+      <div class="modal-card glass">
+        <div class="modal-header">
+          <i data-lucide="palette" class="modal-icon-accent"></i>
+          <h3>Change Layer Color</h3>
+        </div>
+        <div class="modal-body">
+          <div class="modal-color-picker-wrapper">
+            <input type="color" id="layer-color-picker" value="#3b82f6" />
+            <span id="layer-color-hex" class="modal-color-hex">#3B82F6</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-color-cancel" class="btn-secondary">Cancel</button>
+          <button id="btn-color-apply" class="btn-primary">Apply</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ? Delete Layer Confirmation Modal -->
+    <div id="layer-delete-modal" class="modal-overlay hidden">
+      <div class="modal-card glass">
+        <div class="modal-header">
+          <i data-lucide="trash-2" class="modal-icon-danger"></i>
+          <h3>Delete Layer</h3>
+        </div>
+        <div class="modal-body">
+          <p>
+            Are you sure you want to delete "<strong
+              id="delete-layer-name"
+            ></strong
+            >"? This action cannot be undone.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-delete-cancel" class="btn-secondary">Cancel</button>
+          <button id="btn-delete-confirm" class="btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
 
     <!-- ? Screenshot Preview Modal -->
     <div id="screenshot-preview-modal" class="hidden">
