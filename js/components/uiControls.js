@@ -68,12 +68,14 @@ function setupUIEventListeners() {
   initWeightControls();
 
   // ? Disable the NAMRIA Boundary and Provincial Layers if NAMRIA Municipalities is currently selected
-  const municipalityCheckbox = document.getElementById("layer-municipality");
-  const boundaryCheckbox = document.getElementById("layer-namria-boundary");
-  const provinceCheckbox = document.getElementById("layer-province");
+  const municipalityCheckbox = document.getElementById(
+    "namria_layer-municipality",
+  );
+  const boundaryCheckbox = document.getElementById("namria-layer-boundary");
+  const provinceCheckbox = document.getElementById("namria_layer-province");
 
   const wrapBoundary = document.getElementById("wrap-namria-boundary");
-  const wrapProvince = document.getElementById("wrap-namria-province");
+  const wrapProvince = document.getElementById("wrap-namria_province");
 
   municipalityCheckbox?.addEventListener("change", (e) => {
     if (e.target.checked) {
