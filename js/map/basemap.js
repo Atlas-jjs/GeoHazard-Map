@@ -30,11 +30,13 @@ export const BASEMAPS = {
       },
     ),
   ]),
-  topo: L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
-    maxZoom: 17,
-  }),
+  topo: L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+    {
+      attribution: '&copy; <a href="https://esri.com">Esri</a>',
+      maxZoom: 17,
+    },
+  ),
   draped: L.layerGroup([
     L.tileLayer(
       "https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}",
