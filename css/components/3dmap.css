@@ -42,8 +42,8 @@ body.mode-3d .leaflet-control {
 
 /* Hide all modals, floating control dashboards, tools, and overlays in 3D mode, except the basemap switcher */
 body.mode-3d #details-panel,
-body.mode-3d #cad-controls-wrapper,
-body.mode-3d #namria-controls-container,
+body.mode-3d #controls-wrapper,
+body.mode-3d #controls-trigger body.mode-3d #namria-controls-container,
 body.mode-3d #tool-control,
 body.mode-3d .measure-tooltip,
 body.mode-3d .modal-overlay,

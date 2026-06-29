@@ -39,12 +39,12 @@
     <div id="map-3d"></div>
     <div class="sky-overlay"></div>
 
-    <!-- ? CAD Floating Controls Wrapper (Bottom Right) -->
-    <div id="cad-controls-wrapper">
+    <!-- ? Floating Controls Wrapper (Bottom Right) -->
+    <div id="controls-wrapper">
       <!-- ? Floating Controls Panel Container (Bottom Right) -->
       <div id="cad-controls-container">
         <!-- Floating Expandable Control Panel -->
-        <div id="cad-controls-panel" class="floating-card glass hidden">
+        <div id="cad-controls-panel" class="floating-card glass">
           <!-- Tabs Headers -->
           <div class="panel-tabs">
             <button class="tab-btn active" data-tab="layers">
@@ -620,6 +620,50 @@
                           </div>
                         </div>
                       </div>
+                      <!-- * Protected Areas -->
+                      <div class="control-checkbox">
+                        <input type="checkbox" id="cad-layer-pa" />
+                        <span class="checkbox-custom layer-color"></span>
+                        <span class="layer-label">Protected Areas</span>
+                        <div class="layer-style-controls">
+                          <div
+                            class="style-input"
+                            data-layer="cad_pa"
+                            data-control="opacity"
+                          >
+                            <i
+                              data-lucide="blend"
+                              class="style-input-icon opacity-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value opacity-number-input"
+                              min="0"
+                              max="100"
+                              step="5"
+                            />
+                            <span class="style-input-unit">%</span>
+                          </div>
+                          <div
+                            class="style-input"
+                            data-layer="cad_pa"
+                            data-control="weight"
+                          >
+                            <i
+                              data-lucide="minus"
+                              class="style-input-icon weight-grip"
+                            ></i>
+                            <input
+                              type="number"
+                              class="style-input-value weight-number-input"
+                              min="0"
+                              max="5"
+                              step="0.5"
+                            />
+                            <span class="style-input-unit">px</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -1105,16 +1149,11 @@
           </div>
         </div>
       </div>
-
-      <!-- * Floating Trigger Button -->
-      <button id="controls-trigger" class="glass" title="Toggle Map Controls">
-        <i data-lucide="settings" id="trigger-icon"></i>
-      </button>
     </div>
 
     <!-- ? NAMRIA Floating Controls Panel Container (Bottom Left) -->
     <div id="namria-controls-container">
-      <div id="namria-controls-panel" class="floating-card glass hidden">
+      <div id="namria-controls-panel" class="floating-card glass">
         <!-- Tabs Headers -->
         <div class="panel-tabs">
           <!-- ! Replace with tab-btn or use the template below -->
@@ -1736,15 +1775,15 @@
                 <div>
                   <div class="section-title">Biophysical</div>
                   <div class="sublayer-list">
-                    <!-- ! Climate -->
-                    <!-- <div class="control-checkbox">
-                      <input type="checkbox" id="cad-layer-climate" />
+                    <!-- * Climate -->
+                    <div class="control-checkbox">
+                      <input type="checkbox" id="namria-layer-climate" />
                       <span class="checkbox-custom layer-color"></span>
                       <span class="layer-label">Climate</span>
                       <div class="layer-style-controls">
                         <div
                           class="style-input"
-                          data-layer="cad_climate"
+                          data-layer="namria_climate"
                           data-control="opacity"
                         >
                           <i
@@ -1762,7 +1801,7 @@
                         </div>
                         <div
                           class="style-input"
-                          data-layer="cad_climate"
+                          data-layer="namria_climate"
                           data-control="weight"
                         >
                           <i
@@ -1779,7 +1818,7 @@
                           <span class="style-input-unit">px</span>
                         </div>
                       </div>
-                    </div> -->
+                    </div>
                     <!-- * Slope -->
                     <div class="control-checkbox">
                       <input type="checkbox" id="namria-layer-slope" />
@@ -2163,7 +2202,12 @@
         </div>
       </div>
     </div>
-
+    <!-- * Floating Trigger Button -->
+    <div class="controls-trigger-container">
+      <button id="controls-trigger" class="glass" title="Toggle Map Controls">
+        <i data-lucide="settings" id="trigger-icon"></i>
+      </button>
+    </div>
     <!-- ! Use this if planning to add the import tab for the NAMRIA panel    
     <div id="namria-controls-container">
       <div id="namria-controls-panel" class="floating-card glass hidden">
@@ -2257,9 +2301,10 @@
 
     <!-- ? Tools Button-->
     <div id="tool-control" class="tool-control">
-      <button id="measure-toggle" class="tool-btn" title="Measure distance">
+      <!-- ! DISABLED THE MEASUREMENT TOOL FOR NOW -->
+      <!-- <button id="measure-toggle" class="tool-btn" title="Measure distance">
         <i data-lucide="ruler"></i>
-      </button>
+      </button> -->
       <!-- ! PLACEMENT OF THE SCREENSHOT ICON -->
       <!-- <button id="btn-screenshot" class="tool-btn" title="Take Screenshot">
         <i data-lucide="camera"></i>

@@ -11,7 +11,7 @@ export function initMeasureTool(map) {
     .addEventListener("click", clearAllSessions);
 
   const toggleBtn = document.getElementById("measure-toggle");
-  toggleBtn.addEventListener("click", () => toggleMeasureMode(toggleBtn));
+  toggleBtn?.addEventListener("click", () => toggleMeasureMode(toggleBtn));
 
   map.on("click", onMapClick);
   map.on("mousemove", onMapMouseMove);
