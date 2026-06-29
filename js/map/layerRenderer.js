@@ -41,10 +41,26 @@ export function loadLayer(key) {
   if (!layerInfo) return;
 
   const checkbox = document.getElementById(layerInfo.id);
-  const spinner = checkbox.parentElement.querySelector(".spinner-inline");
+  const customCheckbox =
+    checkbox.parentElement.querySelector(".checkbox-custom");
+  const row = checkbox.closest(".control-checkbox");
 
-  // Toggle Loading Indicator
-  if (spinner) spinner.classList.remove("hidden");
+  // ! Guard to prevent loading the spinner while it is already loading
+  if (row.classList.contains("layer-loading")) return;
+
+  const loader = document.createElement("div");
+  loader.classList.add("layer-loader");
+  checkbox.parentElement.insertBefore(loader, checkbox);
+  checkbox.classList.add("hidden");
+  customCheckbox.style.display = "none";
+  row.classList.add("layer-loading");
+
+  const stopLoader = () => {
+    loader.remove();
+    checkbox.classList.remove("hidden");
+    customCheckbox.style.display = "";
+    row.classList.remove("layer-loading");
+  };
 
   fetch(layerInfo.url)
     .then((res) => {
@@ -54,16 +70,17 @@ export function loadLayer(key) {
     .then((geojson) => {
       if (shouldProject(geojson)) {
         projectFeaturesChunked(geojson.features, () => {
-          handleGeoJSONLoadSuccess(key, geojson, spinner);
+          stopLoader();
+          handleGeoJSONLoadSuccess(key, geojson);
         });
       } else {
-        handleGeoJSONLoadSuccess(key, geojson, spinner);
+        stopLoader();
+        handleGeoJSONLoadSuccess(key, geojson);
       }
     })
     .catch((err) => {
       console.error(`Load failed for ${layerInfo.url}:`, err);
-
-      if (spinner) spinner.classList.add("hidden");
+      stopLoader();
       checkbox.checked = false;
       layerInfo.checked = false;
       alert(
@@ -77,14 +94,11 @@ export function loadLayer(key) {
 /* *
  * Handle successfully loaded and projected GeoJSON data.
  */
-function handleGeoJSONLoadSuccess(key, geojson, spinner) {
+function handleGeoJSONLoadSuccess(key, geojson) {
   const layerInfo = AppState.layers[key];
   layerInfo.data = geojson;
   layerInfo.loaded = true;
 
-  if (spinner) spinner.classList.add("hidden");
-
-  // Render Layer on Map
   renderGeoJSONLayer(key);
 
   AppState.pendingLayerCount--;

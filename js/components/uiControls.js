@@ -164,13 +164,8 @@ function setupLayerCheckboxes() {
 
     checkbox.addEventListener("change", (e) => {
       layerInfo.checked = e.target.checked;
-
       if (layerInfo.checked) {
-        if (layerInfo.loaded && layerInfo.leafletLayer) {
-          _map.addLayer(layerInfo.leafletLayer);
-        } else {
-          loadLayer(key);
-        }
+        loadLayer(key);
       } else {
         if (layerInfo.leafletLayer && _map.hasLayer(layerInfo.leafletLayer)) {
           _map.removeLayer(layerInfo.leafletLayer);
