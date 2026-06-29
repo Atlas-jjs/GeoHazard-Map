@@ -1,7 +1,7 @@
 /* BaseMap Switcher */
 .basemap-switcher {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 3px;
   padding: 5px;
   background: rgba(15, 17, 22, 0.82);
@@ -15,8 +15,8 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Thin label above the group (BASEMAP) */
-.basemap-switcher::before {
+/* ! Thin label above the group (BASEMAP) */
+/* .basemap-switcher::before {
   content: "BASEMAP";
   display: block;
   font-size: 0.58rem;
@@ -27,7 +27,7 @@
   padding: 2px 4px 5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   margin-bottom: 2px;
-}
+} */
 
 .bm-btn {
   display: flex;
@@ -43,7 +43,7 @@
   font-family: inherit;
   cursor: pointer;
   white-space: nowrap;
-  min-width: 118px;
+  min-width: fit-content;
   text-align: left;
   transition:
     background 0.15s ease,
