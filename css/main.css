@@ -268,64 +268,25 @@ body {
   box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
 }
 
-/* ! Might Remove */
-/* .import-checkbox {
-  height: 18px;
+/* * === Inline Spinner === */
+.layer-loader {
   width: 18px;
-  border-radius: 50px;
-  border: 2px solid var(--text-muted);
-  margin-right: 12px;
-  position: relative;
-  transition: var(--transition-smooth);
-} */
-
-/* todo === Inline Spinner and Loaders === */
-/* .spinner-inline {
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-top-color: #ffffff;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-top-color: var(--accent);
   border-radius: 50%;
-  animation: rotate 0.8s linear infinite;
+  animation: rotate 0.75s linear infinite;
   display: inline-block;
   vertical-align: middle;
-  margin-left: 6px;
+  flex-shrink: 0;
+  margin-right: 12px;
 }
 
-.spinner-inline.hidden {
-  display: none;
+.layer-loading {
+  opacity: 0.45;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
-
-#loading-progress-container {
-  margin-top: 15px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-card);
-  padding: 12px;
-  border-radius: 8px;
-}
-
-.progress-bar-label {
-  font-size: 11px;
-  color: var(--text-secondary);
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-
-.progress-bar-bg {
-  width: 100%;
-  height: 6px;
-  background-color: rgba(255, 255, 255, 0.06);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-#progress-bar-fill {
-  width: 0%;
-  height: 100%;
-  background-color: var(--accent);
-  transition: width 0.2s ease;
-} */
 
 /* todo #color-hex {
   font-family: monospace;

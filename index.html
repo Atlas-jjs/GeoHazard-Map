@@ -1153,6 +1153,26 @@
 
     <!-- ? NAMRIA Floating Controls Panel Container (Bottom Left) -->
     <div id="namria-controls-container">
+      <!-- Stacked-mode panel switcher (hidden in split mode) -->
+      <div id="stacked-panel-switcher" class="stacked-panel-switcher hidden">
+        <button
+          class="stacked-tab-btn"
+          data-panel="namria"
+          title="NAMRIA Layers"
+        >
+          <i data-lucide="map"></i>
+          <span>NAMRIA</span>
+        </button>
+        <button
+          class="stacked-tab-btn active"
+          data-panel="cad"
+          title="Cadastre Layers"
+        >
+          <i data-lucide="layers"></i>
+          <span>Cadastre</span>
+        </button>
+      </div>
+
       <div id="namria-controls-panel" class="floating-card glass">
         <!-- Tabs Headers -->
         <div class="panel-tabs">
@@ -1195,6 +1215,9 @@
                     <input type="checkbox" id="namria-layer-annual_crop" />
                     <span class="checkbox-custom layer-color"></span>
                     <span class="layer-label">Annual Crop</span>
+                    <span class="spinner-inline hidden"></span>
+                    <!-- ADD THIS -->
+
                     <div class="layer-style-controls">
                       <div
                         class="style-input"
@@ -2150,50 +2173,6 @@
                         </div>
                       </div>
                     </div>
-                    <!-- * Legislated Protected Areas -->
-                    <!-- <div class="control-checkbox">
-                      <input type="checkbox" id="namria-layer-pa" />
-                      <span class="checkbox-custom layer-color"></span>
-                      <span class="layer-label">Protected Areas</span>
-                      <div class="layer-style-controls">
-                        <div
-                          class="style-input"
-                          data-layer="namria_pa"
-                          data-control="opacity"
-                        >
-                          <i
-                            data-lucide="blend"
-                            class="style-input-icon opacity-grip"
-                          ></i>
-                          <input
-                            type="number"
-                            class="style-input-value opacity-number-input"
-                            min="0"
-                            max="100"
-                            step="5"
-                          />
-                          <span class="style-input-unit">%</span>
-                        </div>
-                        <div
-                          class="style-input"
-                          data-layer="namria_pa"
-                          data-control="weight"
-                        >
-                          <i
-                            data-lucide="minus"
-                            class="style-input-icon weight-grip"
-                          ></i>
-                          <input
-                            type="number"
-                            class="style-input-value weight-number-input"
-                            min="0"
-                            max="5"
-                            step="0.5"
-                          />
-                          <span class="style-input-unit">px</span>
-                        </div>
-                      </div>
-                    </div> -->
                   </div>
                 </div>
               </div>
@@ -2202,45 +2181,104 @@
         </div>
       </div>
     </div>
+
     <!-- * Floating Trigger Button -->
     <div class="controls-trigger-container">
-      <button id="controls-trigger" class="glass" title="Toggle Map Controls">
-        <i data-lucide="settings" id="trigger-icon"></i>
-      </button>
-    </div>
-    <!-- ! Use this if planning to add the import tab for the NAMRIA panel    
-    <div id="namria-controls-container">
-      <div id="namria-controls-panel" class="floating-card glass hidden">
-        <div class="panel-tabs">
-          <button class="tab-btn active" data-tab="layers">
-            <i data-lucide="layers"></i> Layers
-          </button>
-        </div>
-
-        <div class="panel-content">
-          <div class="tab-pane active" id="tab-layers">
-            <div class="layer-list">
-              <label class="control-checkbox" id="wrap-namria-boundary">
-                <input type="checkbox" id="namria-layer-boundary" />
-                <span class="checkbox-custom boundary-color"></span>
-                <span class="layer-label">NAMRIA Boundary</span>
-              </label>
-              <label class="control-checkbox" id="wrap-namria_province">
-                <input type="checkbox" id="namria_layer-province" />
-                <span class="checkbox-custom province-color"></span>
-                <span class="layer-label">NAMRIA Provinces</span>
-              </label>
-              <label class="control-checkbox" id="wrap-namria-municipality">
-                <input type="checkbox" id="namria_layer-municipality" />
-                <span class="checkbox-custom municipality-color"></span>
-                <span class="layer-label">NAMRIA Municipalities</span>
-              </label>
-            </div>
+      <div class="trigger-anchor">
+        <!-- Layout Mode Picker (pops up above trigger) -->
+        <div id="layout-picker" class="layout-picker hidden">
+          <div class="layout-picker-label">Panel Layout</div>
+          <div class="layout-picker-options">
+            <!-- Option A: Split — NAMRIA left, CAD right -->
+            <button
+              class="layout-option active"
+              id="layout-split"
+              title="Split: NAMRIA left · Cadastre right"
+            >
+              <svg
+                width="36"
+                height="28"
+                viewBox="0 0 36 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="14"
+                  height="26"
+                  rx="3"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <rect
+                  x="21"
+                  y="1"
+                  width="14"
+                  height="26"
+                  rx="3"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <span>Split</span>
+            </button>
+            <!-- Option B: Stacked — both panels on the right, tab to switch -->
+            <button
+              class="layout-option"
+              id="layout-stacked"
+              title="Stacked: both panels on the right"
+            >
+              <svg
+                width="36"
+                height="28"
+                viewBox="0 0 36 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="11"
+                  y="1"
+                  width="24"
+                  height="11"
+                  rx="3"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <rect
+                  x="11"
+                  y="16"
+                  width="24"
+                  height="11"
+                  rx="3"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="5"
+                  cy="6.5"
+                  r="3"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="5"
+                  cy="21.5"
+                  r="3"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <span>Stacked</span>
+            </button>
           </div>
         </div>
-      </div>
-    </div> -->
 
+        <button id="controls-trigger" class="glass" title="Toggle Map Controls">
+          <i data-lucide="settings" id="trigger-icon"></i>
+        </button>
+      </div>
+    </div>
     <!-- ? Meatball Menu of Layer -->
     <div class="layer-menu-container">
       <button class="layer-menu-trigger">
