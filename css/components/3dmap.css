@@ -45,9 +45,7 @@ body.mode-3d #details-panel,
 body.mode-3d #controls-wrapper,
 body.mode-3d #controls-trigger body.mode-3d #namria-controls-container,
 body.mode-3d #tool-control,
-body.mode-3d .measure-tooltip,
 body.mode-3d .modal-overlay,
-body.mode-3d #measure-panel,
 body.mode-3d .leaflet-bar {
   display: none !important;
 }

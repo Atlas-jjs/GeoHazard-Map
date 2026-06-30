@@ -214,7 +214,6 @@ async function captureWithMap(map) {
     document.getElementById("controls-wrapper"),
     document.getElementById("namria-controls-container"),
     document.getElementById("tool-control"),
-    document.getElementById("measure-panel"),
     document.querySelector(".basemap-switcher"),
     document.querySelector(".leaflet-control-container"),
   ].filter(Boolean);

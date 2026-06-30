@@ -5,7 +5,6 @@ import {
   loadDefaultLayers,
 } from "./js/map/layerRenderer.js";
 import { initImportManager } from "./js/map/importManager/importManager.js";
-import { initMeasureTool } from "./js/components/measureTool.js";
 import { initScreenshot } from "./js/components/screenshot.js";
 
 let map = null;
@@ -27,9 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
     maxZoom: 18,
     zoomControl: true,
   }).setView([17.25, 120.9], 8);
-
-  // * Initial Measuring Tool
-  initMeasureTool(map);
 
   // * Default basemap
   let currentBasemap = BASEMAPS.satellite;

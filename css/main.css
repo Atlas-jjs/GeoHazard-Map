@@ -2,7 +2,6 @@
 
 @import url("./components/basemap-switcher.css");
 @import url("./components/ui-controls.css");
-@import url("./components/measure-tool.css");
 @import url("./components/layer-menu.css");
 @import url("./components/screenshot.css");
 @import url("./components/3dmap.css");
@@ -228,7 +227,7 @@ body {
   color: #ffffff;
 }
 
-/* * Tools (Measurement and Screenshot) */
+/* * Tools (Screenshot) */
 .tool-control {
   position: absolute;
   top: 205px;
