@@ -198,11 +198,6 @@
   margin-left: 12px;
 }
 
-.layer-disabled {
-  opacity: 0.35;
-  pointer-events: none;
-}
-
 .control-checkbox {
   display: flex;
   align-items: center;

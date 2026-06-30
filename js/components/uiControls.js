@@ -66,42 +66,8 @@ function setupUIEventListeners() {
 
   initOpacityControls();
   initWeightControls();
-  namriaMunicipalityConstraints();
   activeLayerContainer();
   setupLayerCheckboxes();
-}
-
-// * Disable the NAMRIA Boundary and Provincial Layers if NAMRIA Municipalities is currently selected
-function namriaMunicipalityConstraints() {
-  const municipalityCheckbox = document.getElementById(
-    "namria_layer-municipality",
-  );
-  const boundaryCheckbox = document.getElementById("namria-layer-boundary");
-  const provinceCheckbox = document.getElementById("namria_layer-province");
-
-  const wrapBoundary = document.getElementById("wrap-namria-boundary");
-  const wrapProvince = document.getElementById("wrap-namria_province");
-
-  municipalityCheckbox?.addEventListener("change", (e) => {
-    if (e.target.checked) {
-      [boundaryCheckbox, provinceCheckbox].forEach((cb) => {
-        if (!cb) return;
-        cb.checked = false;
-        cb.dispatchEvent(new Event("change"));
-      });
-
-      wrapBoundary?.classList.add("layer-disabled");
-      wrapProvince?.classList.add("layer-disabled");
-      boundaryCheckbox.disabled = true;
-      provinceCheckbox.disabled = true;
-    } else {
-      // Re-enable when municipality is unchecked
-      wrapBoundary?.classList.remove("layer-disabled");
-      wrapProvince?.classList.remove("layer-disabled");
-      boundaryCheckbox.disabled = false;
-      provinceCheckbox.disabled = false;
-    }
-  });
 }
 
 // * Add event listener to switch between CADASTRE and NAMRIA Containers
