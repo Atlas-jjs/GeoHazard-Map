@@ -1,5 +1,4 @@
 export function initLayoutController() {
-  /* ── elements ── */
   const trigger = document.getElementById("controls-trigger");
   const picker = document.getElementById("layout-picker");
   const btnSplit = document.getElementById("layout-split");
@@ -11,7 +10,6 @@ export function initLayoutController() {
   const switcher = document.getElementById("stacked-panel-switcher");
   const stackedTabs = switcher.querySelectorAll(".stacked-tab-btn");
 
-  /* ── state ── */
   let pickerOpen = false;
   let layoutMode = "split";
   let activePanel = "cad";

@@ -1,4 +1,4 @@
-import { resetHighlightedFeatures } from "../../components/featureDetails.js";
+import { resetHighlightedFeatures } from "../../map/featureHighlight.js";
 import { initOpacityControls } from "../layers/opacityControls.js";
 import { initWeightControls } from "../layers/weightControls.js";
 import { initLayerContainer } from "../layers/layerSwitcher.js";

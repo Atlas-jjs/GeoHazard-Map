@@ -1,10 +1,8 @@
 import { AppState } from "../config.js";
 import { shouldProject, projectFeaturesChunked } from "../utils/projection.js";
-import {
-  getFeatureName,
-  highlightFeature,
-  showFeatureDetails,
-} from "../components/featureDetails.js";
+import { getFeatureName } from "../utils/featureNaming.js";
+import { highlightFeature } from "./featureHighlight.js";
+import { showFeatureDetails } from "../components/ui/detailsPanel.js";
 
 let _map = null;
 
