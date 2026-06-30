@@ -53,6 +53,11 @@
   bottom: 20px;
   display: flex;
   z-index: 1;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 #cad-controls-container {
@@ -71,22 +76,6 @@
   max-height: calc(100vh - 120px);
   overflow: hidden;
   width: 465px;
-}
-
-/* Right panel */
-#cad-controls-container.collapsed {
-  transform: translateX(calc(465px - 40px));
-}
-
-/* Left panel */
-#namria-controls-container.collapsed {
-  transform: translateX(calc(-465px + 40px));
-}
-
-/* Peek on hover */
-#cad-controls-container.collapsed:hover,
-#namria-controls-container.collapsed:hover {
-  transform: translateX(0);
 }
 
 /* * === Floating Card / Glassmorphism Styles === */
@@ -109,6 +98,7 @@
   transition: var(--transition-smooth);
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 .floating-card.hidden {
@@ -642,18 +632,21 @@
   bottom: 20px;
   flex-direction: column;
   align-items: flex-end;
+  pointer-events: none;
 }
 
 #cad-controls-container.stacked-mode {
   right: 10px;
   bottom: 20px;
   transform: none;
+  pointer-events: none;
 }
 
-/* Collapsed peek is irrelevant in stacked mode — reset */
-#namria-controls-container.stacked-mode.collapsed,
-#cad-controls-container.stacked-mode.collapsed {
-  transform: none;
+#cad-controls-container.hidden,
+#namria-controls-container.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
 }
 
 /* ═══════════════════════════════════════════════
@@ -670,6 +663,7 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   animation: picker-in 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   margin-bottom: 1rem;
+  pointer-events: auto;
 }
 
 .stacked-panel-switcher.hidden {

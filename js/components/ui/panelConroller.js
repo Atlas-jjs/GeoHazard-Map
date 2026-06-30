@@ -1,7 +1,7 @@
 import { resetHighlightedFeatures } from "../../map/featureHighlight.js";
 import { initOpacityControls } from "../layers/opacityControls.js";
 import { initWeightControls } from "../layers/weightControls.js";
-import { initLayerContainer } from "../layers/layerSwitcher.js";
+// import { initLayerContainer } from "../layers/layerSwitcher.js";
 import { setupLayerCheckboxes } from "../layers/layerControls.js";
 
 /*
@@ -10,8 +10,8 @@ import { setupLayerCheckboxes } from "../layers/layerControls.js";
 export function initPanelController(map) {
   // Trigger Button to open the tabs
   const triggerBtn = document.getElementById("controls-trigger");
-  const cadPanel = document.getElementById("cad-controls-panel");
-  const namriaPanel = document.getElementById("namria-controls-panel");
+  const cadPanel = document.getElementById("cad-controls-container");
+  const namriaPanel = document.getElementById("namria-controls-container");
 
   triggerBtn?.addEventListener("click", () => {
     cadPanel.classList.toggle("hidden");
@@ -29,6 +29,6 @@ export function initPanelController(map) {
 
   initOpacityControls();
   initWeightControls();
-  initLayerContainer();
+  // initLayerContainer();
   setupLayerCheckboxes(map);
 }

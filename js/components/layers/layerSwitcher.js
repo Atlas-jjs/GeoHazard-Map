@@ -17,21 +17,14 @@ export function initLayerContainer() {
   }
 
   function activateCad() {
-    cadContainer.classList.remove("collapsed");
-    namriaContainer.classList.add("collapsed");
-
     setCheckboxState(cadContainer, false);
     setCheckboxState(namriaContainer, true);
   }
 
   function activateNamria() {
-    namriaContainer.classList.remove("collapsed");
-    cadContainer.classList.add("collapsed");
-
     setCheckboxState(namriaContainer, false);
     setCheckboxState(cadContainer, true);
   }
 
-  cadContainer.addEventListener("pointerdown", activateCad);
-  namriaContainer.addEventListener("pointerdown", activateNamria);
+  return { activateCad, activateNamria };
 }
