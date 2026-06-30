@@ -1,6 +1,6 @@
 import { resetHighlightedFeatures } from "../../components/featureDetails.js";
 import { initOpacityControls } from "../layers/opacityControls.js";
-// import { initWeightControls } from "../layers//weightControls.js";
+import { initWeightControls } from "../layers/weightControls.js";
 import { initLayerContainer } from "../layers/layerSwitcher.js";
 import { setupLayerCheckboxes } from "../layers/layerControls.js";
 
@@ -28,7 +28,7 @@ export function initPanelController(map) {
   });
 
   initOpacityControls();
-  // initWeightControls();
+  initWeightControls();
   initLayerContainer();
   setupLayerCheckboxes(map);
 }

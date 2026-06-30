@@ -20,7 +20,6 @@ export function initWeightControls() {
         layerConfig.leafletLayer?.setStyle({ weight: clamped });
       };
 
-      // sensitivity: 0.05 keeps weight changes slow and fine-grained
       makeDragGrip(grip, () => parseFloat(input.value), applyWeight, 0.05);
 
       input.addEventListener("click", (e) => e.stopPropagation());
