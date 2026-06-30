@@ -5,7 +5,6 @@ import {
   highlightFeature,
   showFeatureDetails,
 } from "../components/featureDetails.js";
-import { buildCodeColorMap } from "../utils/colorUtils.js";
 
 let _map = null;
 
@@ -118,33 +117,33 @@ function renderGeoJSONLayer(key) {
     _map.removeLayer(layerInfo.leafletLayer);
   }
 
-  const colorField = layerInfo.colorField;
-  const codeColorMap = buildCodeColorMap(
-    layerInfo.data,
-    layerInfo.codeColors,
-    colorField,
-  );
-  layerInfo.codeColorMap = codeColorMap;
-
   layerInfo.leafletLayer = L.geoJSON(layerInfo.data, {
-    style: codeColorMap
-      ? (feature) => {
-          const code = String(feature.properties?.[colorField] ?? "");
-          const color = codeColorMap[code] ?? layerInfo.style.fillColor;
-          return { ...layerInfo.style, color, fillColor: color };
-        }
-      : layerInfo.style,
+    style:
+      layerInfo.colorField && layerInfo.codeColors
+        ? (feature) => {
+            const code = String(
+              feature.properties?.[layerInfo.colorField] ?? "",
+            );
+            const color =
+              layerInfo.codeColors[code] ?? layerInfo.style.fillColor;
+            return { ...layerInfo.style, color, fillColor: color };
+          }
+        : layerInfo.style,
     onEachFeature: (feature, layer) => {
-      // console.log(feature.properties);
-
       layer.on({
         mouseover: (e) => {
           const outline = e.target;
+
+          // Does not override the selectedLayer when hovering other polygons
+          if (outline === layerInfo.selectedLayer) return;
+
           outline.setStyle({
             weight: layerInfo.style.weight + 1,
             color: "#ffffff",
-            fillOpacity: Math.min(layerInfo.style.fillOpacity + 0.15, 0.7),
+            fillOpacity: layerInfo.style.fillOpacity,
           });
+
+          outline.bringToFront();
 
           let name = getFeatureName(feature.properties, key);
           if (name) {
@@ -157,14 +156,26 @@ function renderGeoJSONLayer(key) {
           }
         },
         mouseout: (e) => {
-          layerInfo.leafletLayer.resetStyle(e.target);
+          const outline = e.target;
+          if (outline === layerInfo.selectedLayer) return;
+          layerInfo.leafletLayer.resetStyle(outline);
+          outline.closeTooltip();
         },
         click: (e) => {
           if (e.target.getBounds) {
             _map.fitBounds(e.target.getBounds());
           }
+
+          // Unhighlight previous selection
+          if (layerInfo.selectedLayer && layerInfo.selectedLayer !== e.target) {
+            layerInfo.leafletLayer.resetStyle(layerInfo.selectedLayer);
+          }
+
+          layerInfo.selectedLayer = e.target;
           highlightFeature(e.target);
           showFeatureDetails(feature.properties, layerInfo.name);
+
+          L.DomEvent.stopPropagation(e);
         },
       });
     },

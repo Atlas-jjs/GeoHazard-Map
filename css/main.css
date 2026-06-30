@@ -2,6 +2,7 @@
 
 @import url("./components/basemap-switcher.css");
 @import url("./components/ui-controls.css");
+@import url("./components/leaflet.css");
 
 :root {
   /* Color Palette */

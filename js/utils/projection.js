@@ -1,6 +1,9 @@
-// * Coordinate projection utilities for EPSG:32651 (UTM Zone 51N) to EPSG:4326 (WGS84)
+/*
+ * Converts GeoJSON coordinates from UTM (EPSG:32651) to WGS84 (EPSG:4326)
+ * before rendering them on the map. Processes features in chunks to avoid
+ * freezing the browser.
+ */
 
-// Auto-register on module load
 proj4.defs(
   "EPSG:32651",
   "+proj=utm +zone=51 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",

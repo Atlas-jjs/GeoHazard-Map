@@ -102,7 +102,7 @@ export function highlightFeature(layer) {
   highlightedFeature = layer;
   layer.setStyle({
     weight: 3.5,
-    color: "#fbbf24", // Glow Yellow outline
+    color: "#fbbf24",
     fillOpacity: 0.4,
   });
 }
@@ -120,15 +120,6 @@ export function resetHighlightedFeatures() {
     );
     if (key && AppState.layers[key]) {
       AppState.layers[key].leafletLayer.resetStyle(highlightedFeature);
-    } else {
-      // Search custom imported layers
-      const customLayer = AppState.importedLayers.find(
-        (item) =>
-          item.leafletLayer && item.leafletLayer.hasLayer(highlightedFeature),
-      );
-      if (customLayer) {
-        customLayer.leafletLayer.resetStyle(highlightedFeature);
-      }
     }
     highlightedFeature = null;
   }
