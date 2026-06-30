@@ -1,0 +1,12 @@
+import { initPanelController } from "./ui/panelConroller.js";
+import { initLayoutController } from "./ui/layoutController.js";
+
+/*
+ * Main UI entry point. Wires up all panel, control, and layout
+ * behaviors once the Leaflet map instance is ready.
+ * @param {L.Map} map
+ */
+export function initializeUI(map) {
+  initPanelController(map);
+  initLayoutController();
+}

@@ -1,5 +1,5 @@
 import { BASEMAPS, BasemapSwitcher } from "./js/map/basemap.js";
-import { initUIControls } from "./js/components/uiControls.js";
+import { initializeUI } from "./js/components/initUI.js";
 import {
   initLayerRenderer,
   loadDefaultLayers,
@@ -38,6 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Setup Event Listeners for UI
   initLayerRenderer(map);
-  initUIControls(map);
+  initializeUI(map);
   loadDefaultLayers();
 });
