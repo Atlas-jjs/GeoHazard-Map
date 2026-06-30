@@ -4,7 +4,6 @@ import {
   initLayerRenderer,
   loadDefaultLayers,
 } from "./js/map/layerRenderer.js";
-import { initImportManager } from "./js/map/importManager/importManager.js";
 
 let map = null;
 
@@ -40,6 +39,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup Event Listeners for UI
   initLayerRenderer(map);
   initUIControls(map);
-  initImportManager(map);
   loadDefaultLayers();
 });

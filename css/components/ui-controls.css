@@ -148,20 +148,6 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
-.tab-btn.active {
-  color: var(--text-primary);
-  border-bottom-color: var(--accent);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.tab-pane {
-  display: none;
-}
-
-.tab-pane.active {
-  display: block;
-}
-
 /* Checkbox Styles (Layers) */
 .layer-list {
   display: flex;

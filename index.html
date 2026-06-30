@@ -43,9 +43,6 @@
             <button class="tab-btn active" data-tab="layers">
               <i data-lucide="layers"></i> Layers
             </button>
-            <button class="tab-btn" data-tab="import">
-              <i data-lucide="upload-cloud"></i> Import
-            </button>
           </div>
 
           <!-- Tab Contents -->
@@ -1089,54 +1086,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- * Import Tab -->
-            <div class="tab-pane" id="tab-import">
-              <div class="section-title">Import Custom Data</div>
-              <div class="upload-zone" id="upload-zone">
-                <i data-lucide="upload-cloud" class="upload-icon"></i>
-                <p class="upload-text">Drag & drop or click to upload</p>
-                <p class="upload-subtext">
-                  Supports .geojson, .json, or zipped shapefiles (.zip)
-                </p>
-                <input
-                  type="file"
-                  id="file-input"
-                  accept=".geojson,.json,.zip"
-                  style="display: none"
-                />
-              </div>
-
-              <div id="import-options" class="import-options-card hidden">
-                <div class="option-field">
-                  <label for="import-layer-name">Layer Name</label>
-                  <input
-                    type="text"
-                    id="import-layer-name"
-                    placeholder="Enter Layer Name"
-                  />
-                </div>
-                <div class="option-field">
-                  <label for="import-layer-color">Layer Color</label>
-                  <div class="color-picker-wrapper">
-                    <input
-                      type="color"
-                      id="import-layer-color"
-                      value="#3b82f6"
-                    />
-                    <span id="color-hex">#3b82f6</span>
-                  </div>
-                </div>
-                <button id="btn-load-import" class="btn-primary">
-                  Add to Map
-                </button>
-              </div>
-
-              <div class="section-title">Imported Layers</div>
-              <div id="imported-layers-list" class="layer-list">
-                <div class="empty-state">No custom layers imported yet.</div>
               </div>
             </div>
           </div>
@@ -2272,49 +2221,6 @@
         </button>
       </div>
     </div>
-    <!-- ? Meatball Menu of Layer -->
-    <div class="layer-menu-container">
-      <button class="layer-menu-trigger">
-        <i class="fa-solid fa-ellipsis"></i>
-      </button>
-
-      <!-- ! LAYER BUTTON -->
-      <div class="layer-menu-dropdown">
-        <button class="layer-menu-item--icon-only" title="Zoom to Layer">
-          <i class="fa-solid fa-expand"></i>
-        </button>
-
-        <button class="layer-menu-item--icon-only" title="Rename Layer">
-          <i class="fa-solid fa-pen"></i>
-        </button>
-
-        <button
-          class="layer-menu-item--icon-only layer-menu-item--danger"
-          title="Delete Layer"
-        >
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- ? Rename Validation Modal -->
-    <div id="rename-error-modal" class="modal-overlay hidden">
-      <div class="modal-card glass">
-        <div class="modal-header">
-          <i data-lucide="alert-triangle" class="modal-icon-warning"></i>
-          <h3>Name Already Exists</h3>
-        </div>
-        <div class="modal-body">
-          <p>
-            A layer named "<strong id="rename-error-name"></strong>" already
-            exists. Please choose a unique name.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button id="btn-rename-error-ok" class="btn-primary">OK</button>
-        </div>
-      </div>
-    </div>
 
     <!-- ? Floating Details Panel (Top Left) -->
     <div id="details-panel" class="floating-card glass hidden">
@@ -2331,71 +2237,6 @@
         <!-- Dynamic Properties Will Go Here -->
         <div class="empty-state">
           Click on any map boundary or feature to view detailed attributes.
-        </div>
-      </div>
-    </div>
-
-    <!-- ? Rename Layer Modal -->
-    <div id="layer-rename-modal" class="modal-overlay hidden">
-      <div class="modal-card glass">
-        <div class="modal-header">
-          <i data-lucide="pencil" class="modal-icon-accent"></i>
-          <h3>Rename Layer</h3>
-        </div>
-        <div class="modal-body">
-          <label for="layer-rename-input">Layer name</label>
-          <input
-            type="text"
-            id="layer-rename-input"
-            class="modal-text-input"
-            placeholder="Enter new name"
-          />
-        </div>
-        <div class="modal-footer">
-          <button id="btn-rename-cancel" class="btn-secondary">Cancel</button>
-          <button id="btn-rename-save" class="btn-primary">Save</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ? Change Layer Color Modal -->
-    <div id="layer-color-modal" class="modal-overlay hidden">
-      <div class="modal-card glass">
-        <div class="modal-header">
-          <i data-lucide="palette" class="modal-icon-accent"></i>
-          <h3>Change Layer Color</h3>
-        </div>
-        <div class="modal-body">
-          <div class="modal-color-picker-wrapper">
-            <input type="color" id="layer-color-picker" value="#3b82f6" />
-            <span id="layer-color-hex" class="modal-color-hex">#3B82F6</span>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="btn-color-cancel" class="btn-secondary">Cancel</button>
-          <button id="btn-color-apply" class="btn-primary">Apply</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ? Delete Layer Confirmation Modal -->
-    <div id="layer-delete-modal" class="modal-overlay hidden">
-      <div class="modal-card glass">
-        <div class="modal-header">
-          <i data-lucide="trash-2" class="modal-icon-danger"></i>
-          <h3>Delete Layer</h3>
-        </div>
-        <div class="modal-body">
-          <p>
-            Are you sure you want to delete "<strong
-              id="delete-layer-name"
-            ></strong
-            >"? This action cannot be undone.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button id="btn-delete-cancel" class="btn-secondary">Cancel</button>
-          <button id="btn-delete-confirm" class="btn-danger">Delete</button>
         </div>
       </div>
     </div>
