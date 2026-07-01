@@ -378,7 +378,7 @@ export const AppState = {
       checked: false,
       url: "data/geojson/namria/CAR_NAMRIA_Boundary.geojson",
       style: {
-        color: "#71bb5b",
+        color: "#3b82f6",
         weight: 3,
         fillOpacity: 0,
       },
@@ -392,10 +392,10 @@ export const AppState = {
       checked: false,
       url: "data/geojson/namria/CAR_NAMRIA_Provincial_Boundary.geojson",
       style: {
-        color: "#e6c63c",
+        color: "#06b6d4",
         weight: 2,
         fillOpacity: 0.1,
-        fillColor: "#e6c63c",
+        fillColor: "#06b6d4",
       },
     },
     namria_municipality: {
@@ -407,7 +407,7 @@ export const AppState = {
       checked: false,
       url: "data/geojson/namria/CAR_NAMRIA_Municipal_Boundary.geojson",
       style: {
-        color: "#f7f442",
+        color: "#10b981",
         weight: 1.2,
         dashArray: "4, 4",
         fillOpacity: 0,
