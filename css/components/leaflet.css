@@ -16,7 +16,7 @@
 
 /* * The Design for the Zoom In/Out */
 .leaflet-bar a {
-  background-color: var(--bg-card);
+  background-color: var(--bg-card) !important;
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-card);
   backdrop-filter: blur(8px);
