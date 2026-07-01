@@ -59,9 +59,12 @@ export function loadLayer(key) {
     row.classList.remove("layer-loading");
   };
 
-  fetch(layerInfo.url)
+  // Construct the absolute path pointing directly to Hugging Face
+  const remoteUrl = `https://huggingface.co/datasets/Atlas-jjs/denr-geojson-data/resolve/main/${layerInfo.url}`;
+
+  fetch(remoteUrl)
     .then((res) => {
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${remoteUrl}`);
       return res.json();
     })
     .then((geojson) => {
@@ -76,12 +79,12 @@ export function loadLayer(key) {
       }
     })
     .catch((err) => {
-      console.error(`Load failed for ${layerInfo.url}:`, err);
+      console.error(`Load failed for remote asset: ${remoteUrl}`, err);
       stopLoader();
       checkbox.checked = false;
       layerInfo.checked = false;
       alert(
-        `Failed to load ${layerInfo.name} layer. Make sure the .geojson file exists in the GeoJson folder.`,
+        `Failed to load ${layerInfo.name} layer from the remote Hugging Face dataset.`,
       );
     });
 }
