@@ -1,0 +1,83 @@
+/* * Page Loader Overlay */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-dark);
+  overflow: hidden;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+}
+
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.loader-logo {
+  border-radius: 100%;
+  object-fit: contain;
+  animation: rotate 1.55s linear infinite;
+}
+
+.loader-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255, 255, 255, 0.08);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: rotate 0.75s linear infinite;
+}
+
+.loader-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+@media screen and (min-width: 320px) {
+  .loader-logo {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media screen and (min-width: 760px) {
+  .loader-logo {
+    width: 140px;
+    height: 140px;
+  }
+
+  .loader-content {
+    gap: 14px;
+  }
+
+  .loader-text {
+    font-size: 12px;
+    text-align: center;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .loader-logo {
+    width: 220px;
+    height: 220px;
+  }
+}
