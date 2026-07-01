@@ -32,6 +32,34 @@
     <div id="map"></div>
     <div class="sky-overlay"></div>
 
+    <!-- ? -->
+    <div id="basemap-switcher" class="leaflet-top leaflet-right">
+      <div class="leaflet-control basemap-switcher">
+        <!-- Mobile -->
+        <button class="bm-trigger">
+          <span id="bm-current">Satellite</span>
+          <i data-lucide="chevron-down"></i>
+        </button>
+
+        <div class="bm-menu">
+          <button data-basemap="satellite">Satellite</button>
+          <button data-basemap="hybrid">Hybrid</button>
+          <button data-basemap="street">Open Street</button>
+          <button data-basemap="topo">Topography</button>
+        </div>
+
+        <!-- Desktop -->
+        <div class="bm-tabs">
+          <button class="bm-btn active" data-basemap="satellite">
+            Satellite
+          </button>
+          <button class="bm-btn" data-basemap="hybrid">Hybrid</button>
+          <button class="bm-btn" data-basemap="street">Open Street</button>
+          <button class="bm-btn" data-basemap="topo">Topography</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ? Floating Controls Panel Container (Bottom Right) -->
     <div id="cad-controls-container">
       <!-- Floating Expandable Control Panel -->

@@ -1,3 +1,41 @@
 .leaflet-interactive:focus {
   outline: none;
 }
+
+.leaflet-container {
+  font-family: var(--font-body);
+}
+
+/* * Top Left (Zoom In/Out) */
+.leaflet-bar {
+  border: 1px solid var(--border-card);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* * The Design for the Zoom In/Out */
+.leaflet-bar a {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-card);
+  backdrop-filter: blur(8px);
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+.leaflet-bar a:hover {
+  background-color: rgba(42, 54, 79, 0.95);
+  color: #fff;
+}
+
+/* * Very Bottom Right (Credits) */
+.leaflet-control-attribution {
+  background: rgba(11, 14, 20, 0.8) !important;
+  color: var(--text-muted) !important;
+  backdrop-filter: blur(4px);
+  font-size: 10px !important;
+}
+
+.leaflet-tooltip {
+  z-index: 9999;
+}

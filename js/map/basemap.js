@@ -37,53 +37,93 @@ export const BASEMAPS = {
   ),
 };
 
-export const BasemapSwitcher = L.Control.extend({
-  options: {
-    position: "topright",
-    currentBasemap: null,
-    onChange: null,
-  },
+export function initBasemapSwitcher(map, initialBasemap, onChange) {
+  const container = document.getElementById("basemap-switcher");
+  const trigger = container.querySelector(".bm-trigger");
+  const menu = container.querySelector(".bm-menu");
+  const current = container.querySelector("#bm-current");
 
-  onAdd(map) {
-    const container = L.DomUtil.create("div", "basemap-switcher");
-    L.DomEvent.disableClickPropagation(container);
+  const dropdownButtons = menu.querySelectorAll("button");
+  const tabButtons = container.querySelectorAll(".bm-tabs .bm-btn");
 
-    const layers = [
-      { key: "satellite", label: "Satellite" },
-      { key: "hybrid", label: "Hybrid" },
-      { key: "street", label: "Open Street" },
-      { key: "topo", label: "Topography" },
-    ];
+  let currentBasemap = initialBasemap;
 
-    layers.forEach(({ key, label }) => {
-      const isActive = this.options.currentBasemap === BASEMAPS[key];
-      const btn = L.DomUtil.create(
-        "button",
-        "bm-btn" + (isActive ? " active" : ""),
-        container,
-      );
-      btn.innerHTML = `<span class="bm-label">${label}</span>`;
-      btn.title = label + " basemap";
+  const labels = {
+    satellite: "Satellite",
+    hybrid: "Hybrid",
+    street: "Open Street",
+    topo: "Topography",
+  };
 
-      L.DomEvent.on(btn, "click", () => {
-        if (this.options.currentBasemap) {
-          map.removeLayer(this.options.currentBasemap);
-        }
+  // ! Prevent Leaflet from stealing mouse events
+  L.DomEvent.disableClickPropagation(container);
+  L.DomEvent.disableScrollPropagation(container);
 
-        this.options.currentBasemap = BASEMAPS[key];
-        this.options.currentBasemap.addTo(map);
+  function switchBasemap(key) {
+    if (currentBasemap) {
+      map.removeLayer(currentBasemap);
+    }
 
-        if (this.options.onChange) {
-          this.options.onChange(this.options.currentBasemap);
-        }
+    currentBasemap = BASEMAPS[key];
+    currentBasemap.addTo(map);
 
-        container
-          .querySelectorAll(".bm-btn")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-      });
+    current.textContent = labels[key];
+
+    dropdownButtons.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.basemap === key);
     });
 
-    return container;
-  },
-});
+    tabButtons.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.basemap === key);
+    });
+
+    menu.classList.remove("open");
+    trigger.classList.remove("open");
+
+    onChange?.(currentBasemap);
+  }
+
+  trigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("open");
+    trigger.classList.toggle("open");
+  });
+
+  dropdownButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      switchBasemap(btn.dataset.basemap);
+    });
+  });
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      switchBasemap(btn.dataset.basemap);
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!container.contains(e.target)) {
+      menu.classList.remove("open");
+      trigger.classList.remove("open");
+    }
+  });
+
+  // Set initial state
+  const initialKey = Object.keys(BASEMAPS).find(
+    (key) => BASEMAPS[key] === initialBasemap,
+  );
+
+  if (initialKey) {
+    current.textContent = labels[initialKey];
+
+    dropdownButtons.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.basemap === initialKey);
+    });
+
+    tabButtons.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.basemap === initialKey);
+    });
+  }
+}

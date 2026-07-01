@@ -1,8 +1,4 @@
-/* BaseMap Switcher */
 .basemap-switcher {
-  display: flex;
-  flex-direction: row;
-  gap: 3px;
   padding: 5px;
   background: rgba(15, 17, 22, 0.82);
   backdrop-filter: blur(10px);
@@ -15,97 +11,150 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* ! Thin label above the group (BASEMAP) */
-/* .basemap-switcher::before {
-  content: "BASEMAP";
-  display: block;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.3);
-  text-align: center;
-  padding: 2px 4px 5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  margin-bottom: 2px;
-} */
+@media screen and (min-width: 320px) {
+  /* * Desktop Tabs */
+  .bm-tabs {
+    display: none;
+  }
 
-.bm-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px 6px 7px;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 7px;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.72rem;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  white-space: nowrap;
-  min-width: fit-content;
-  text-align: left;
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease,
-    transform 0.1s ease;
+  /* * Dropdown */
+  .bm-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 170px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(30, 33, 40, 0.95);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.72rem;
+  }
+  .bm-trigger:hover {
+    background: rgba(40, 44, 52, 0.95);
+  }
+
+  /* * Chevron */
+  .bm-trigger .lucide {
+    width: 16px;
+    height: 16px;
+    color: #8d99ae;
+    transition: transform 0.2s ease;
+  }
+  .bm-trigger.open .lucide {
+    transform: rotate(180deg);
+  }
+
+  /* * Dropdown Selections Wrapper */
+  .bm-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 5px;
+    right: 5px;
+    display: none;
+    overflow: hidden;
+    background: rgba(15, 17, 22, 0.97);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    z-index: 1000;
+  }
+  .bm-menu.open {
+    display: block;
+    animation: bmFade 0.18s ease;
+  }
+
+  /* * Dropdown Selections */
+  .bm-menu button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 9px 12px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.75);
+    text-align: left;
+    font: inherit;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+  .bm-menu button:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+  .bm-menu button.active {
+    background: rgba(82, 183, 136, 0.15);
+    color: #74c69d;
+    font-weight: 600;
+  }
 }
 
-.bm-btn:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.9);
-  transform: translateX(1px);
+@media (min-width: 760px) {
+  /* * Remove the Dropdown and its selections */
+  .bm-trigger,
+  .bm-menu {
+    display: none;
+  }
+
+  /* * Display the Desktop Tabs */
+  .bm-tabs {
+    display: flex;
+    gap: 3px;
+  }
+
+  /* * Desktop Tabs */
+  .bm-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px 6px 7px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.72rem;
+    font-weight: 500;
+    font-family: inherit;
+
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      border-color 0.15s,
+      color 0.15s,
+      transform 0.1s;
+  }
+  .bm-btn:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    transform: translateX(1px);
+  }
+  .bm-btn.active {
+    background: rgba(82, 183, 136, 0.15);
+    border-color: rgba(82, 183, 136, 0.5);
+    color: #74c69d;
+    font-weight: 600;
+  }
+  .bm-btn.active:hover {
+    background: rgba(82, 183, 136, 0.2);
+  }
 }
 
-.bm-btn.active {
-  background: rgba(82, 183, 136, 0.15);
-  border-color: rgba(82, 183, 136, 0.5);
-  color: #74c69d;
-  font-weight: 600;
-}
+@keyframes bmFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 
-.bm-btn.active:hover {
-  background: rgba(82, 183, 136, 0.2);
-  transform: translateX(1px);
-}
-
-.bm-label {
-  flex: 1;
-}
-
-/* Leaflet Overrides for Dark Premium Design */
-.leaflet-container {
-  font-family: var(--font-body);
-}
-
-.leaflet-bar {
-  border: 1px solid var(--border-card);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.leaflet-bar a {
-  background-color: var(--bg-card) !important;
-  color: var(--text-primary) !important;
-  border-bottom: 1px solid var(--border-card) !important;
-  backdrop-filter: blur(8px);
-  transition: var(--transition-smooth);
-}
-
-.leaflet-bar a:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-}
-
-.leaflet-control-attribution {
-  background: rgba(11, 14, 20, 0.8) !important;
-  color: var(--text-muted) !important;
-  backdrop-filter: blur(4px);
-  font-size: 10px !important;
-}
-.leaflet-tooltip {
-  z-index: 9999;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
