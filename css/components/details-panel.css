@@ -4,7 +4,7 @@
   left: 20px;
   width: 380px;
   max-width: calc(100vw - 40px);
-  max-height: calc(100vh - 200px);
+  max-height: calc(100dvh - 200px);
   overflow-y: auto;
 }
 

@@ -8,7 +8,7 @@
 .panel-content {
   padding: 20px;
   overflow-y: auto;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100dvh - 200px);
 }
 
 /* * Panel Dock */
@@ -22,6 +22,17 @@
   gap: 12px;
   max-width: calc(100vw - 40px);
   z-index: 1;
+
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+.panel-dock.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
 }
 
 .panel-dock__panels {
@@ -33,22 +44,6 @@
 #cad-controls-container,
 #namria-controls-container {
   grid-area: 1 / 1;
-  transform: translateY(0);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-#cad-controls-container.hidden,
-#namria-controls-container.hidden {
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-#cad-controls-container:not(.hidden),
-#namria-controls-container:not(.hidden) {
-  z-index: 1;
 }
 
 /* Controls Expandable Panel */
@@ -56,7 +51,7 @@
 #namria-controls-panel {
   position: relative;
   max-width: calc(100vw - 40px);
-  max-height: calc(100vh - 120px);
+  max-height: calc(100dvh - 120px);
   overflow: hidden;
   width: 465px;
 }
@@ -164,12 +159,12 @@
   #namria-controls-panel {
     width: min(320px, calc(100vw - 24px));
     max-width: calc(100vw - 24px);
-    max-height: 42vh;
+    max-height: 42dvh;
   }
 
   .panel-content {
     padding: 14px;
-    max-height: calc(42vh - 56px);
+    max-height: calc(42dvh - 56px);
   }
 
   .panel-tabs .tab-btn {
@@ -214,6 +209,6 @@
   #namria-controls-panel {
     width: min(400px, calc(100vw - 24px));
     max-width: calc(100vw - 24px);
-    max-height: 75dvh;
+    max-height: 75ddvh;
   }
 }

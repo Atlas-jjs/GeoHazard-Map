@@ -10,14 +10,10 @@ import { setupLayerCheckboxes } from "../layers/layerControls.js";
 export function initPanelController(map) {
   // Trigger Button to open the tabs
   const triggerBtn = document.getElementById("controls-trigger");
-  const cadPanel = document.getElementById("cad-controls-container");
-  const namriaPanel = document.getElementById("namria-controls-container");
-  const switcher = document.getElementById("panel-switcher");
+  const panelDock = document.getElementById("panel-dock");
 
   triggerBtn?.addEventListener("click", () => {
-    cadPanel.classList.toggle("hidden");
-    namriaPanel.classList.toggle("hidden");
-    switcher.classList.toggle("hidden");
+    panelDock.classList.toggle("hidden");
     triggerBtn.classList.toggle("active");
   });
 
