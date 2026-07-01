@@ -1,8 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap");
 
 @import url("./components/basemap-switcher.css");
-@import url("./components/ui-controls.css");
+@import url("./components/panels/panel-controls.css");
 @import url("./components/leaflet.css");
+@import url("./components/page-loader.css");
+@import url("./components/details-panel.css");
+@import url("./components/controls-trigger.css");
 
 :root {
   /* Color Palette */
@@ -48,13 +51,14 @@ html {
   color: var(--text-primary);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
 }
 
 body {
   perspective: 1200px;
 }
 
-/* Scrollbar Customization */
+/* * Scrollbar Customization */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -69,7 +73,7 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* * === Buttons === */
+/* * Buttons (Panel Tabs) */
 .btn-primary {
   background: var(--accent);
   color: #ffffff;
@@ -82,63 +86,12 @@ body {
   cursor: pointer;
   transition: var(--transition-smooth);
 }
-
 .btn-primary:hover {
   background: #1d4ed8;
   box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
 }
 
-/* * === Page Loader Overlay === */
-.page-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: var(--bg-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    opacity 0.5s ease,
-    visibility 0.5s ease;
-}
-
-.page-loader.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.loader-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.loader-logo {
-  width: 300px;
-  height: 300px;
-  border-radius: 100%;
-  object-fit: contain;
-  animation: rotate 1.55s linear infinite;
-}
-
-.loader-spinner {
-  width: 36px;
-  height: 36px;
-  border: 3px solid rgba(255, 255, 255, 0.08);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: rotate 0.75s linear infinite;
-}
-
-.loader-text {
-  font-size: 13px;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
-}
-
-/* * === Fullscreen Map styling ===  */
+/* * Fullscreen Map styling  */
 #map {
   width: 100%;
   height: 100%;
@@ -148,108 +101,30 @@ body {
   z-index: 1;
 }
 
-/* * === Details Panel (Top Left) === */
-#details-panel {
-  top: 20px;
-  left: 20px;
-  width: 380px;
-  max-width: calc(100vw - 40px);
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
+/* * Floating Card / Glassmorphism Styles (CADASTRE, NAMRIA, and Feature Details) */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-card);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
-.details-icons {
+.floating-card {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  border-radius: 16px;
+  z-index: 1000;
   display: flex;
-  gap: 4px;
-}
-
-/* * === Card Elements & Header === */
-.card-header {
-  padding: 24px 24px 16px 24px;
-  border-bottom: 1px solid var(--border-card);
-}
-
-.card-tag {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-}
-
-.card-header h2 {
-  font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.card-body {
-  padding: 1.5rem;
-  overflow-y: auto;
-  flex-grow: 1;
-}
-
-/* * === Icon Button Styling for the X and Camera Icon in the Details Pane === */
-.icon-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   transition: var(--transition-smooth);
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
-
-.icon-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-}
-
-/* * === Inline Spinner === */
-.layer-loader {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.08);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: rotate 0.75s linear infinite;
-  display: inline-block;
-  vertical-align: middle;
-  flex-shrink: 0;
-  margin-right: 12px;
-}
-
-.layer-loading {
-  opacity: 0.45;
+.floating-card.hidden {
+  opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-/* todo #color-hex {
-  font-family: monospace;
-  font-size: 13px;
-  color: var(--text-secondary);
-} */
-
-/* * === Keyframes Animations === */
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  transform: translateY(15px) scale(0.95);
 }

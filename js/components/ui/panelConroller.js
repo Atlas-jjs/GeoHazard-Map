@@ -12,10 +12,12 @@ export function initPanelController(map) {
   const triggerBtn = document.getElementById("controls-trigger");
   const cadPanel = document.getElementById("cad-controls-container");
   const namriaPanel = document.getElementById("namria-controls-container");
+  const switcher = document.getElementById("panel-switcher");
 
   triggerBtn?.addEventListener("click", () => {
     cadPanel.classList.toggle("hidden");
     namriaPanel.classList.toggle("hidden");
+    switcher.classList.toggle("hidden");
     triggerBtn.classList.toggle("active");
   });
 

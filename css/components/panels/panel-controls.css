@@ -1,0 +1,219 @@
+@import url("./checkbox.css");
+@import url("./opacity-controls.css");
+@import url("./panel-switcher.css");
+@import url("./inline-spinner.css");
+
+/* * Layer Containers */
+/* ? Target the inner content */
+.panel-content {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+/* * Panel Dock */
+.panel-dock {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  max-width: calc(100vw - 40px);
+  z-index: 1;
+}
+
+.panel-dock__panels {
+  position: relative;
+  display: grid;
+}
+
+/* * Panel Containers */
+#cad-controls-container,
+#namria-controls-container {
+  grid-area: 1 / 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+#cad-controls-container.hidden,
+#namria-controls-container.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#cad-controls-container:not(.hidden),
+#namria-controls-container:not(.hidden) {
+  z-index: 1;
+}
+
+/* Controls Expandable Panel */
+#cad-controls-panel,
+#namria-controls-panel {
+  position: relative;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 120px);
+  overflow: hidden;
+  width: 465px;
+}
+
+/* * Panel Tabs ( Layers ) */
+/* ? Background Panel */
+.panel-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-card);
+}
+
+/* ? Panel */
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+  border-bottom: 2px solid transparent;
+}
+
+/* * Title (Layers) */
+.title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin: 18px 0 0 0;
+}
+
+/* * Section Title (Land Cover, Land Classification, Biophysical, Hazards, Land Tenure/Development */
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin: 18px 0 10px 0;
+}
+
+/* * Subsection layer (Under Section Titles) */
+.sublayer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+.layer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.layer-label {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* * Below 325px of the panel's own width, let the label wrap safely
+   instead of overflowing past its shrunk box into the style controls. */
+@container layer-panel (max-width: 325px) {
+  .layer-label {
+    display: block;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 768px) {
+  .panel-dock {
+    margin-bottom: 6rem;
+  }
+
+  #controls-trigger {
+    width: 35px;
+    height: 35px;
+    border-radius: 25px;
+  }
+
+  #controls-trigger .lucide {
+    width: 22px;
+    height: 22px;
+  }
+
+  .trigger-anchor {
+    margin-bottom: 14px;
+  }
+
+  #cad-controls-panel,
+  #namria-controls-panel {
+    width: min(320px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    max-height: 42vh;
+  }
+
+  .panel-content {
+    padding: 14px;
+    max-height: calc(42vh - 56px);
+  }
+
+  .panel-tabs .tab-btn {
+    padding: 12px 0;
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 14px;
+    margin-top: 14px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    margin: 14px 0 8px 0;
+  }
+
+  .layer-list {
+    gap: 10px;
+  }
+
+  .control-checkbox {
+    font-size: 13px;
+  }
+
+  .checkbox-custom {
+    height: 20px;
+    width: 20px;
+  }
+
+  .style-input {
+    min-height: 28px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .panel-dock {
+    margin-bottom: 6rem;
+  }
+
+  #cad-controls-panel,
+  #namria-controls-panel {
+    width: min(400px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    max-height: 75dvh;
+  }
+}

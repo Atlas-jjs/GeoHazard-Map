@@ -1,4 +1,4 @@
-import { BASEMAPS, BasemapSwitcher } from "./js/map/basemap.js";
+import { BASEMAPS, initBasemapSwitcher } from "./js/map/basemap.js";
 import { initializeUI } from "./js/components/initUI.js";
 import {
   initLayerRenderer,
@@ -29,12 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentBasemap = BASEMAPS.satellite;
   currentBasemap.addTo(map);
 
-  new BasemapSwitcher({
-    currentBasemap,
-    onChange: (newBasemap) => {
-      currentBasemap = newBasemap;
-    },
-  }).addTo(map);
+  initBasemapSwitcher(map, currentBasemap, (newBasemap) => {
+    currentBasemap = newBasemap;
+  });
 
   // Setup Event Listeners for UI
   initLayerRenderer(map);

@@ -1,0 +1,60 @@
+.panel-switcher {
+  display: flex;
+  z-index: 2;
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  pointer-events: auto;
+  max-width: 100%;
+  flex-shrink: 0;
+  transform: translateY(0);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+.panel-switcher.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* * Panel Switcher Buttons */
+.container-tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.container-tab-btn svg,
+.container-tab-btn i {
+  width: 14px;
+  height: 14px;
+}
+
+.container-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.container-tab-btn.active {
+  background: rgba(37, 99, 235, 0.2);
+  color: #fff;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+}

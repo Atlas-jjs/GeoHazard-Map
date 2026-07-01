@@ -5,27 +5,29 @@ export function initLayoutController() {
   const namriaPanel = document.getElementById("namria-controls-panel");
   const cadContainer = document.getElementById("cad-controls-container");
   const namriaContainer = document.getElementById("namria-controls-container");
-  const switcher = document.getElementById("stacked-panel-switcher");
-  const stackedTabs = switcher.querySelectorAll(".stacked-tab-btn");
+  const switcher = document.getElementById("panel-switcher");
+  const stackedTabs = switcher.querySelectorAll(".container-tab-btn");
 
   const { activateCad, activateNamria } = initLayerContainer();
 
   let activePanel = "cad";
 
-  function applyStackedLayout() {
-    namriaContainer.classList.add("stacked-mode");
-    cadContainer.classList.add("stacked-mode");
+  function applyLayout() {
     switcher.classList.remove("hidden");
-    showStackedPanel(activePanel);
+    showPanels(activePanel);
   }
 
-  function showStackedPanel(panel) {
+  function showPanels(panel) {
     activePanel = panel;
     if (panel === "cad") {
+      cadContainer.classList.remove("hidden");
+      namriaContainer.classList.add("hidden");
       cadPanel.classList.remove("hidden");
       namriaPanel.classList.add("hidden");
       activateCad();
     } else {
+      namriaContainer.classList.remove("hidden");
+      cadContainer.classList.add("hidden");
       namriaPanel.classList.remove("hidden");
       cadPanel.classList.add("hidden");
       activateNamria();
@@ -36,8 +38,8 @@ export function initLayoutController() {
   }
 
   stackedTabs.forEach((btn) => {
-    btn.addEventListener("click", () => showStackedPanel(btn.dataset.panel));
+    btn.addEventListener("click", () => showPanels(btn.dataset.panel));
   });
 
-  applyStackedLayout();
+  applyLayout();
 }

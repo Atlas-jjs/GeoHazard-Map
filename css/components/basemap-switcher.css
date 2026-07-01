@@ -96,7 +96,7 @@
   }
 }
 
-@media (min-width: 760px) {
+@media (min-width: 768px) {
   /* * Remove the Dropdown and its selections */
   .bm-trigger,
   .bm-menu {

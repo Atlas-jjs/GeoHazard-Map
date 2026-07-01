@@ -1,0 +1,48 @@
+@media screen and (min-width: 320px) {
+  /* * Controls Trigger Button */
+  .controls-trigger-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: right;
+    position: relative;
+    pointer-events: none;
+    padding: 18px;
+  }
+
+  #controls-trigger {
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    border: 1px solid var(--border-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 1;
+    pointer-events: all;
+  }
+  #controls-trigger:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+
+  #controls-trigger .lucide {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.5s ease;
+  }
+
+  #controls-trigger.active .lucide {
+    transform: rotate(90deg);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .controls-trigger-container {
+    justify-content: center;
+  }
+}
