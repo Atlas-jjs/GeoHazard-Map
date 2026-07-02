@@ -1,7 +1,7 @@
 import { AppState } from "../config.js";
 import { shouldProject, projectFeaturesChunked } from "../utils/projection.js";
 import { getFeatureName } from "../utils/featureNaming.js";
-import { highlightFeature } from "./featureHighlight.js";
+import { highlightFeature, resetHighlightedFeatures } from "./featureHighlight.js";
 import { showFeatureDetails } from "../components/ui/detailsPanel.js";
 import { updateBoundaryAnalysis } from "../components/ui/details/boundaryAnalysis.js";
 
@@ -13,6 +13,25 @@ let _map = null;
  */
 export function initLayerRenderer(map) {
   _map = map;
+
+  // Initialize custom panes for z-ordering layers
+  if (!map.getPane("polygonsPane")) {
+    const pane = map.createPane("polygonsPane");
+    pane.style.zIndex = 410;
+  }
+  if (!map.getPane("linesPane")) {
+    const pane = map.createPane("linesPane");
+    pane.style.zIndex = 420;
+  }
+  if (!map.getPane("pointsPane")) {
+    const pane = map.createPane("pointsPane");
+    pane.style.zIndex = 430;
+  }
+
+  // Handle clicking away on the map background to clear selection and restore levels
+  map.on("click", () => {
+    deselectCurrentBoundary();
+  });
 }
 
 /* *
@@ -114,6 +133,121 @@ function handleGeoJSONLoadSuccess(key, geojson) {
 }
 
 /* *
+ * Calculates the median (50th percentile) area of polygon features in a layer.
+ * Used to rank layers so that layers with overall smaller polygons sit on top.
+ */
+function calculateLayerMedianArea(layerInfo) {
+  if (!layerInfo.data || !layerInfo.data.features) return 0;
+  const polygonFeatures = layerInfo.data.features.filter(
+    (f) =>
+      f.geometry &&
+      (f.geometry.type === "Polygon" || f.geometry.type === "MultiPolygon"),
+  );
+  if (polygonFeatures.length === 0) return 0;
+
+  const areas = [];
+  polygonFeatures.forEach((f) => {
+    if (typeof turf !== "undefined" && turf.area) {
+      try {
+        const a = turf.area(f);
+        if (a > 0) {
+          areas.push(a);
+        }
+      } catch (e) {}
+    }
+  });
+
+  if (areas.length === 0) return 0;
+  areas.sort((a, b) => a - b);
+  const mid = Math.floor(areas.length / 2);
+  return areas.length % 2 !== 0
+    ? areas[mid]
+    : (areas[mid - 1] + areas[mid]) / 2;
+}
+
+/* *
+ * Resets the style and clears references for the currently selected boundary,
+ * then restores the polygon z-index sorting order.
+ */
+export function deselectCurrentBoundary() {
+  if (!AppState.selectedBoundary) return;
+
+  const key = AppState.selectedBoundary.layerKey;
+  const layerInfo = AppState.layers[key];
+  if (layerInfo) {
+    if (layerInfo.selectedLayer && layerInfo.leafletLayer) {
+      layerInfo.leafletLayer.resetStyle(layerInfo.selectedLayer);
+    }
+    layerInfo.selectedLayer = null;
+  }
+
+  AppState.selectedBoundary = null;
+  resetHighlightedFeatures();
+
+  const detailsPanel = document.getElementById("details-panel");
+  if (detailsPanel) {
+    detailsPanel.classList.add("hidden");
+  }
+
+  sortPolygonsInPane();
+}
+
+/* *
+ * Sorts all polygon path elements in the polygonsPane SVG container:
+ * 1. First by their layer's median area (largest median area layer on the bottom).
+ * 2. Then within the same layer, by individual feature area (largest feature on the bottom).
+ * This ensures the smallest polygon is painted last (renders on top) and the largest first.
+ */
+export function sortPolygonsInPane() {
+  if (!_map) return;
+  const pane = _map.getPane("polygonsPane");
+  if (!pane) return;
+  const svg = pane.querySelector("svg");
+  if (!svg) return;
+
+  const paths = Array.from(svg.querySelectorAll("path"));
+  if (paths.length === 0) return;
+
+  // Build a map of active layer keys to their median area
+  const layerMedianAreas = {};
+  Object.keys(AppState.layers).forEach((key) => {
+    const layerInfo = AppState.layers[key];
+    if (layerInfo.checked && layerInfo.loaded) {
+      if (layerInfo.medianArea === undefined) {
+        layerInfo.medianArea = calculateLayerMedianArea(layerInfo);
+      }
+      layerMedianAreas[key] = layerInfo.medianArea || 0;
+    }
+  });
+
+  // Sort paths based on layer-level median area first, then individual feature area
+  paths.sort((a, b) => {
+    const layerKeyA = a.getAttribute("data-layer-key") || "";
+    const layerKeyB = b.getAttribute("data-layer-key") || "";
+
+    const medianA = layerMedianAreas[layerKeyA] ?? 0;
+    const medianB = layerMedianAreas[layerKeyB] ?? 0;
+
+    if (medianA !== medianB) {
+      return medianB - medianA; // Descending: larger median area layer first (at bottom)
+    }
+
+    // Same layer: sort by individual feature area
+    const areaA = parseFloat(a.getAttribute("data-area") || "0");
+    const areaB = parseFloat(b.getAttribute("data-area") || "0");
+    return areaB - areaA; // Descending: larger individual feature area first (at bottom)
+  });
+
+  // Re-append paths to their parent to update their DOM order
+  paths.forEach((path) => {
+    const parent = path.parentNode;
+    if (parent) {
+      parent.appendChild(path);
+    }
+  });
+}
+
+/* *
  * Create and add a Leaflet GeoJSON layer with style and interactivity bindings.
  */
 function renderGeoJSONLayer(key) {
@@ -137,6 +271,35 @@ function renderGeoJSONLayer(key) {
           }
         : layerInfo.style,
     onEachFeature: (feature, layer) => {
+      // Assign custom panes based on geometry category to arrange points > lines > polygons
+      const geomType = feature.geometry ? feature.geometry.type : null;
+      if (geomType === "Point" || geomType === "MultiPoint") {
+        layer.options.pane = "pointsPane";
+      } else if (geomType === "LineString" || geomType === "MultiLineString") {
+        layer.options.pane = "linesPane";
+      } else if (geomType === "Polygon" || geomType === "MultiPolygon") {
+        layer.options.pane = "polygonsPane";
+
+        // Calculate polygon area using Turf.js
+        let area = 0;
+        if (typeof turf !== "undefined" && turf.area) {
+          try {
+            area = turf.area(feature);
+          } catch (e) {
+            area = 0;
+          }
+        }
+
+        // Tag the DOM element with the area and layer key once the layer is added to the map
+        layer.on("add", () => {
+          const el = layer.getElement();
+          if (el) {
+            el.setAttribute("data-area", area);
+            el.setAttribute("data-layer-key", key);
+          }
+        });
+      }
+
       layer.on({
         mouseover: (e) => {
           const outline = e.target;
@@ -150,7 +313,10 @@ function renderGeoJSONLayer(key) {
             fillOpacity: layerInfo.style.fillOpacity,
           });
 
-          outline.bringToFront();
+          // Only bring to front on hover if it's NOT a polygon (e.g. lines, points)
+          if (geomType !== "Polygon" && geomType !== "MultiPolygon") {
+            outline.bringToFront();
+          }
 
           let name = getFeatureName(feature.properties, key);
           if (name) {
@@ -173,10 +339,8 @@ function renderGeoJSONLayer(key) {
             _map.fitBounds(e.target.getBounds());
           }
 
-          // Unhighlight previous selection
-          if (layerInfo.selectedLayer && layerInfo.selectedLayer !== e.target) {
-            layerInfo.leafletLayer.resetStyle(layerInfo.selectedLayer);
-          }
+          // Deselect the previously selected boundary first to restore its level
+          deselectCurrentBoundary();
 
           layerInfo.selectedLayer = e.target;
 
@@ -184,11 +348,16 @@ function renderGeoJSONLayer(key) {
           AppState.selectedBoundary = {
             feature: feature,
             layerKey: key,
-            layerInfo: layerInfo
+            layerInfo: layerInfo,
           };
 
           highlightFeature(e.target);
           showFeatureDetails(feature.properties, layerInfo.name);
+
+          // Bring the newly selected polygon to the top of the polygonsPane
+          if (geomType === "Polygon" || geomType === "MultiPolygon") {
+            e.target.bringToFront();
+          }
 
           L.DomEvent.stopPropagation(e);
         },
@@ -198,5 +367,6 @@ function renderGeoJSONLayer(key) {
 
   if (layerInfo.checked) {
     _map.addLayer(layerInfo.leafletLayer);
+    sortPolygonsInPane();
   }
 }

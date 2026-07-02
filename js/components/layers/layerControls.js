@@ -1,7 +1,6 @@
 import { AppState } from "../../config.js";
-import { loadLayer } from "../../map/layerRenderer.js";
+import { loadLayer, deselectCurrentBoundary } from "../../map/layerRenderer.js";
 import { updateBoundaryAnalysis } from "../ui/details/boundaryAnalysis.js";
-import { resetHighlightedFeatures } from "../../map/featureHighlight.js";
 
 /*
  * Attaches change event listeners to individual layer checkboxes dynamically based on AppState,
@@ -33,9 +32,7 @@ export function setupLayerCheckboxes(map) {
         }
         // If the unchecked layer contained the selected boundary, clear highlight and panel
         if (AppState.selectedBoundary && AppState.selectedBoundary.layerKey === key) {
-          AppState.selectedBoundary = null;
-          document.getElementById("details-panel").classList.add("hidden");
-          resetHighlightedFeatures();
+          deselectCurrentBoundary();
         }
       }
 
@@ -44,3 +41,4 @@ export function setupLayerCheckboxes(map) {
     });
   });
 }
+
