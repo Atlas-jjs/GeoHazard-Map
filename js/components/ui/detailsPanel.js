@@ -1,4 +1,6 @@
 import { getFeatureName } from "../../utils/featureNaming.js";
+import { AppState } from "../../config.js";
+import { updateBoundaryAnalysis } from "./details/boundaryAnalysis.js";
 import {
   normalizeAttributeKey,
   shouldHideAttribute,
@@ -63,6 +65,19 @@ export function showFeatureDetails(properties, layerName) {
 
   tableHtml += "</table>";
 
+  // Check if the selected feature is a Polygon/MultiPolygon
+  const selectedBoundary = AppState.selectedBoundary;
+  const geomType = selectedBoundary?.feature?.geometry?.type;
+  const isPolygon = geomType === "Polygon" || geomType === "MultiPolygon";
+
+  if (isPolygon) {
+    tableHtml += `<div id="overlapping-analysis-container"></div>`;
+  }
+
   detailsContent.innerHTML = tableHtml;
   detailsPanel.classList.remove("hidden");
+
+  if (isPolygon) {
+    updateBoundaryAnalysis();
+  }
 }

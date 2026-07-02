@@ -3,6 +3,7 @@ import { shouldProject, projectFeaturesChunked } from "../utils/projection.js";
 import { getFeatureName } from "../utils/featureNaming.js";
 import { highlightFeature } from "./featureHighlight.js";
 import { showFeatureDetails } from "../components/ui/detailsPanel.js";
+import { updateBoundaryAnalysis } from "../components/ui/details/boundaryAnalysis.js";
 
 let _map = null;
 
@@ -105,6 +106,11 @@ function handleGeoJSONLoadSuccess(key, geojson) {
   if (AppState.pendingLayerCount <= 0) {
     document.getElementById("page-loader").classList.add("hidden");
   }
+
+  // Recalculate analysis if we have a selected boundary
+  if (AppState.selectedBoundary) {
+    updateBoundaryAnalysis();
+  }
 }
 
 /* *
@@ -173,6 +179,14 @@ function renderGeoJSONLayer(key) {
           }
 
           layerInfo.selectedLayer = e.target;
+
+          // Save selected boundary in AppState!
+          AppState.selectedBoundary = {
+            feature: feature,
+            layerKey: key,
+            layerInfo: layerInfo
+          };
+
           highlightFeature(e.target);
           showFeatureDetails(feature.properties, layerInfo.name);
 

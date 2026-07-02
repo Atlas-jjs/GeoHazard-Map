@@ -840,4 +840,5 @@ export const AppState = {
   },
   importedLayers: [],
   pendingLayerCount: 0,
+  selectedBoundary: null,
 };

@@ -3,6 +3,7 @@ import { initOpacityControls } from "../layers/opacityControls.js";
 import { initWeightControls } from "../layers/weightControls.js";
 // import { initLayerContainer } from "../layers/layerSwitcher.js";
 import { setupLayerCheckboxes } from "../layers/layerControls.js";
+import { AppState } from "../../config.js";
 
 /*
  * Sets up core event listeners for UI components including the control panel toggle, details panel close button, tab switching functionality, and specific map layer triggers.
@@ -23,6 +24,7 @@ export function initPanelController(map) {
   closeDetailsBtn?.addEventListener("click", () => {
     detailsPanel.classList.add("hidden");
     resetHighlightedFeatures();
+    AppState.selectedBoundary = null;
   });
 
   initOpacityControls();
